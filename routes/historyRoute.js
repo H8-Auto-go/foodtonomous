@@ -5,5 +5,5 @@ const route = require('express').Router()
 route.use(auth)
 route.get('/history', HistoryController.getHistoryUser)
 route.post('/history', HistoryController.addHistory)
-route.delete('/history/:id', HistoryController.removeHistory)
+route.delete('/history/', HistoryController.removeAllHistory)
 module.exports = route

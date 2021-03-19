@@ -2,10 +2,25 @@ const request = require('supertest');
 const app = require('../app')
 const mongoose = require('mongoose')
 let id;
-let access_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNTRjNTRjYjNlZmY1YzdkOTI4MTVkOCIsImVtYWlsIjoiYWRtaW5AbWFpbC5jb20iLCJyb2xlIjoiVXNlciIsImlhdCI6MTYxNjE2ODI5M30.dDgQjWlHm3yt2xX5toIfa4Ir7ywp5uIzOsyDbk3Vjxc'
+let access_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNTRjN2U5OTRmZjdlY2NiN2VlOWQyYiIsImVtYWlsIjoiYW1vc0BtYWlsLmNvbSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjE2MTc0MjI0fQ.edMrewcHn6bByD-RmTO9shYW_-fzeDgg9hhlsSu13ao'
+let fakeToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNTUwNDdhZTdjZDRkMDgxNDQ4YTM1MyIsImVtYWlsIjoiYWRtaW5hZG1pbkBtYWlsLmNvbSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjE2MTg0NDUyfQ.wC4EvwpKPPWEVaowQ-8GQVS8pa3z6YwAaFweaTZvaL0'
 afterAll(done => {
     mongoose.connection.close()
     done()
+})
+
+
+describe('GET /order', (done) => {
+    it('', () => {
+        request(app)
+            .get('/order')
+            .set('access_token', fakeToken)
+            .end((err, res) => {
+                if(err) done(err)
+                expect(res.status).toBe(403)
+                done()
+            })
+    })
 })
 
 
@@ -38,6 +53,7 @@ describe('POST /order', () => {
                 done()
             })
     })
+
 
     it('should response with 400 status code when erorr handler', (done) => {
         const data = {
@@ -129,7 +145,7 @@ describe('PATCH /order/id', () => {
                 expect(res.status).toEqual(404)
                 expect(typeof res.body).toEqual('object')
                 expect(res.body).toHaveProperty('Error')
-                expect(res.body).toHaveProperty('Error','order not found')
+                expect(res.body).toHaveProperty('Error', 'order not found')
                 done()
             })
     })

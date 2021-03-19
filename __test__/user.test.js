@@ -11,7 +11,7 @@ describe('POST /login', () => {
     it('should response with 200 status code when login succeed', (done) => {
         const body = {
             email: 'admin@mail.com',
-            password: 'amos'
+            password: '1234'
         }
 
         request(app)
@@ -43,12 +43,31 @@ describe('POST /login', () => {
                 done()
             })
     })
+
+    it('should response with 404 status code when user / email wrong', (done) => {
+        const body = {
+            email: 'admin@mail.com',
+            password: 'amosww'
+        }
+
+        request(app)
+            .post('/users/login')
+            .send(body)
+            .end((err, res) => {
+                if (err) done(err)
+                expect(res.status).toBe(404)
+                expect(typeof res.body).toEqual('object')
+                expect(res.body).toHaveProperty('Error');
+                expect(res.body).toHaveProperty('Error', 'invalid email password');
+                done()
+            })
+    })
 })
 
 describe('POST /register', () => {
     it('should response with 201 status code when user register', (done) => {
         const data = {
-            email: 'amos@mail.com',
+            email: 'amos1@mail.com',
             password:'amos'
         }
 
@@ -67,7 +86,7 @@ describe('POST /register', () => {
 
     it('should response with 400 status code when user register email alraedy exist', (done) => {
         const data = {
-            email: 'amos@mail.com',
+            email: 'amos1@mail.com',
             password:'amos'
         }
 

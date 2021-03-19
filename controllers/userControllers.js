@@ -23,8 +23,7 @@ class UserController {
             const {email, password} = req.body
             const user = await User.findOne({email})
             if(!user) throw {name:"customErr", code:404, msg:"invalid email password"}
-            const compare = comparePassword(password, user.password)
-            if(!compare) throw {name:"customErr", code:404, msg:"invalid email password"}
+            if(!comparePassword(password, user.password)) throw {name:"customErr", code:404, msg:"invalid email password"}
             const token = generateToken({
                 id: user._id,
                 email: user.email,

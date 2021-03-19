@@ -1,24 +1,30 @@
 const User = require("../models/user")
 
 class HistoryController {
-    static async getHistoryUser(req, res) {
+    static async getHistoryUser(req, res, next) {
         try {
             const {id} = req.user
-            console.log(id);
             const user = await User.findById(id).populate('history')
-            console.log(user);
-            res.status(200).json(user)
+            if(!user) throw {name: 'customErr', code:404, msg:'user not found'}
+            const {role, _id, email, history} = user
+            res.status(200).json({
+                role,
+                _id,
+                email,
+                history
+            })
         } catch (err) {
             console.log(err);
-            res.status(400).json(err)
+            next(err)
         }
     }
 
-    static async addHistory(req, res) {
+    static async addHistory(req, res, next) {
         try {
             const {pic, food} = req.body
             const {id} = req.user
             const user = await User.findById(id)
+            if(!user) throw {name: 'customErr', code:404, msg:'user not found'}
             user.history.push({
                 pic,
                 food
@@ -28,21 +34,21 @@ class HistoryController {
             res.status(201).json(user)
         } catch (err) {
             console.log(err);
-            res.status(400).json(err)
+            next(err)
         }
     }
 
-    static async removeHistory(req, res) {
+    static async removeAllHistory(req, res, next) {
         try {
             const {id} = req.user
             const user = await User.findById(id)
-            const newHistory =  user.history.filter(history => history.id !== req.params.id)
-            user.history = newHistory
+            if(!user) throw {name: 'customErr', code:404, msg:'user not found'}
+            user.history = []
             await user.save()
-            const userNew = await User.findById(id)
-            res.status(200).json(user)
+            const {role, _id, email, history} = user
+            res.status(200).json({role, _id, email, history})
         } catch (err) {
-            res.status(400).json(err)
+            next(err)
         }
     }
 }
