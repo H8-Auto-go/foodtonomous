@@ -15,4 +15,4 @@ mongoose.connect('mongodb://localhost:27017/myapp', {
 
 app.use(route)
 app.use(errorHandler)
-app.listen(PORT, () => console.log(`server running on port:${PORT}`))
+module.exports = app

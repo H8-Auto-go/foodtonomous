@@ -3,15 +3,15 @@ const { comparePassword } = require('../helpers/bcrypt');
 const generateToken = require('../helpers/jwt')
 const User = require('../models/user')
 class UserController {
-    static async getAll(req, res, next) {
-        try {
-            const users = await User.find()
-            console.log(users);
-            res.status(200).json(users)
-        } catch (err) {
-            next(err)
-        }
-    }
+    // static async getAll(req, res, next) {
+    //     try {
+    //         const users = await User.find()
+    //         console.log(users);
+    //         res.status(200).json(users)
+    //     } catch (err) {
+    //         next(err)
+    //     }
+    // }
 
     static async register(req, res, next) {
         try {
