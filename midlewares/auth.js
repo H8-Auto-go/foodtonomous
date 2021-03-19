@@ -7,6 +7,7 @@ module.exports = (req, res, next) => {
         const user = User.findOne({email:decode.email})
         if(!user) throw {name:"customErr", code:403, msg:"invalid token"}
         req.user = decode
+        next()
     } catch (err) {
         next(err)
     }
