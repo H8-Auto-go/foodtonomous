@@ -1,0 +1,13 @@
+[
+    {
+        "name": "Angga Maulana",
+        "email": "angga@xavier.com",
+        "password": "1234",
+        "saldo": 100000,
+        "avatar": "https://avatars.dicebear.com/api/avataaars/angga.svg?style=circle`",
+        "location": {
+            "lat": 123.3,
+            "long": 32
+        }
+    }
+]
