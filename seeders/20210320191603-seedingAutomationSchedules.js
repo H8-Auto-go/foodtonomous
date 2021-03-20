@@ -1,8 +1,9 @@
 'use strict';
 const automationScheduleData = require('./seedData/automationSchedules.json')
-const automationSchedule = automationScheduleData.map(({time, userId, foodId, restaurantId}) =>  {
+const automationSchedule = automationScheduleData.map(({time, userId, isActive, foodId, restaurantId}) =>  {
   return {
     time,
+    isActive,
     userId,
     foodId,
     restaurantId,
@@ -30,7 +31,7 @@ module.exports = {
      *
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
-     * 
+     *
      */
      await queryInterface.bulkDelete('AutomationSchedules', null, {})
   }

@@ -1,10 +1,11 @@
-const {Food} = require('../models')
+const {Foods} = require('../models')
 
 
 module.exports = class FoodController {
-    static async getAllFood(req, res, next) {
+    static async getAllFoods(req, res, next) {
         try {
-            const foods = await Food.findAll()
+            console.log('masuk')
+            const foods = await Foods.findAll()
             res.status(200).json(foods)
         } catch(err) {
             next(err)

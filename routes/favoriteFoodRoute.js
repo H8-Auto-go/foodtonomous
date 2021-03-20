@@ -1,4 +1,4 @@
-const favoriteFoodController = require('../controllers/favoriteFoodController')
+const FavoriteFoodController = require('../controllers/favoriteFoodController')
 const history = require('./historyRoute')
 const route = require('express').Router()
 

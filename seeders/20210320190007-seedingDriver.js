@@ -1,8 +1,9 @@
 'use strict';
 const { hashPassword } = require('../helpers/bcrypt');
 const driverData = require('./seedData/drivers.json')
-const drivers = driverData.map(({email, password, avatar, location, saldo}) => {
+const drivers = driverData.map(({name, email, password, avatar, location, saldo}) => {
   return {
+    name,
     email,
     password:hashPassword(password),
     avatar,

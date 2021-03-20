@@ -10,7 +10,6 @@ const foods = foodsData.map(({name, price, restaurantId, picture}) => {
     updatedAt: new Date()
   }
 })
-console.log(foods)
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     /**

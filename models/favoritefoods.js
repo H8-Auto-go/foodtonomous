@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       FavoriteFood.belongsTo(models.User, {foreignKey: 'userId'})
-      FavoriteFood.belongsTo(models.Food, {foreignKey: 'foodId'})
+      FavoriteFood.belongsTo(models.Foods, {foreignKey: 'foodId'})
       FavoriteFood.belongsTo(models.Restaurant, {foreignKey: 'restaurantId'})
     }
   };

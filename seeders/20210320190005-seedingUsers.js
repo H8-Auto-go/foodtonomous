@@ -1,8 +1,9 @@
 'use strict';
 const {hashPassword} = require('../helpers/bcrypt')
 const usersData = require('./seedData/users.json')
-const users = usersData.map(({ email, password, saldo, avatar, location }) => {
+const users = usersData.map(({ name, email, password, saldo, avatar, location }) => {
   return {
+    name,
     email,
     password: hashPassword(password),
     saldo,

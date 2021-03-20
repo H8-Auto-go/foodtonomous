@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       AutomationSchedule.belongsTo(models.Restaurant, {foreignKey: 'restaurantId'})
-      AutomationSchedule.belongsTo(models.Food, {foreignKey: 'foodId'})
+      AutomationSchedule.belongsTo(models.Foods, {foreignKey: 'foodId'})
     }
   };
   AutomationSchedule.init({

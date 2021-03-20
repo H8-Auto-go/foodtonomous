@@ -12,9 +12,9 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Order.belongsTo(models.User, {foreignKey: 'userId'})
-      Order.belongsTo(models.User, {foreignKey: 'driverId'})
+      Order.belongsTo(models.Driver, {foreignKey: 'driverId'})
       Order.belongsTo(models.Restaurant, {foreignKey: 'restaurantId'})
-      Order.belongsTo(models.Food, {foreignKey: 'foodId'})
+      Order.belongsTo(models.Foods, {foreignKey: 'foodId'})
     }
   };
   Order.init({

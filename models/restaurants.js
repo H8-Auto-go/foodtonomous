@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Restaurant.hasMany(models.AutomationSchedule, {foreignKey: 'restaurantId'})
-      Restaurant.hasMany(models.Food, {foreignKey: 'restaurantId'})
+      Restaurant.hasMany(models.Foods, {foreignKey: 'restaurantId'})
       Restaurant.hasMany(models.Order, {foreignKey: 'restaurantId'})
       Restaurant.hasMany(models.FavoriteFood, {foreignKey: 'restaurantId'})
     }
