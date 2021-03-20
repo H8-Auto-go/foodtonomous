@@ -22,8 +22,9 @@ class OrderController {
 
     static async updateStatus(req, res, next) {
         try {
-            const order = await Order.findById(req.params.id)
+            const order = await Order.findByIdAndUpdate(req.params.id, req.body)
             if(!order) throw {name:"customErr", code:404, msg:"order not found"}
+
             res.status(200).json({msg:'Success update status'})
         } catch (err) {
             next(err)

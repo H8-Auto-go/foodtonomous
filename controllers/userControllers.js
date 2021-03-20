@@ -21,15 +21,16 @@ class UserController {
     static async login (req, res, next) {
         try {
             const {email, password} = req.body
+            console.log(email, password, "anjay gaming")
             const user = await User.findOne({email})
             if(!user) throw {name:"customErr", code:404, msg:"invalid email password"}
             if(!comparePassword(password, user.password)) throw {name:"customErr", code:404, msg:"invalid email password"}
-            const token = generateToken({
+            const access_token = generateToken({
                 id: user._id,
                 email: user.email,
                 role: user.role
             })
-            res.status(200).json({token})
+            res.status(200).json({access_token})
         } catch (err) {
             next(err)
         }
