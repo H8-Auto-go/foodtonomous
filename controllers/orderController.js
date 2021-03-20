@@ -3,12 +3,12 @@ const {Order, User, Driver, Restaurant, Foods} = require('../models')
 class OrderController {
     static async addOrder(req, res) {
         try {
-            const {restaurantId, foodId } = req.body
-            const {id} = res.user
+            const {restaurantId, foodId} = req.body
+            const userId = /*res.user.id*/ 1
             const order = await Order.create({
                 restaurantId,
                 foodId,
-                userId: id,
+                userId,
             })
             res.status(201).json(order)
         } catch (err) {
@@ -19,9 +19,9 @@ class OrderController {
     static async addOrderDriver(req, res, next){
         try {
             const orderId = +req.params.id
-            const {id} = req.user
+            const driverId = /*req.user.id*/ 1
             const apdatedOrder = await Order.update({
-                driverId:id
+                driverId
             },{where:{id:orderId}})
             res.status(200).json(apdatedOrder)
         } catch (err) {
@@ -70,9 +70,24 @@ class OrderController {
     static async updateStatus(req, res, next) {
         try {
             const orderId = +req.params.id
-            const updateStatus = await Order.update({status:req.body}, {where:{id:orderId}})
+            const {status} = req.body
+            const updateStatus = await Order.update({status}, {where:{id:orderId}})
             res.status(200).json(updateStatus)
         } catch (err) {
+            next(err)
+        }
+    }
+
+    static async patchLocation(req, res, next) {
+        try {
+            console.log('masuk')
+            const orderId = +req.params.id
+            const {lat, long} = req.body
+            const location = JSON.stringify({lat, long})
+            const {driverId} = await Order.findByPk(orderId)
+            await Driver.update({location}, {where: {id: driverId}})
+            res.status(200).json({message: "location updated"})
+        } catch(err) {
             next(err)
         }
     }
@@ -80,8 +95,8 @@ class OrderController {
     static async deleteOrder(req, res, next) {
         try {
             const orderId = +req.params.id
-            if(!order) throw {name:"customErr", code:404, msg:"order not found"}
-            res.status(200).json({msg: 'Success delete order'})
+            await Order.destroy({where: {id:orderId}})
+            res.status(200).json({message: 'Success delete order'})
         } catch (err) {
             next(err)
         }

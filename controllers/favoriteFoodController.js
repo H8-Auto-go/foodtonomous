@@ -57,7 +57,9 @@ module.exports = class FavoriteFoodController {
     }
     static async addFavoriteFood(req, res, next) {
         try {
-            const newFavoriteFood = await FavoriteFood.create(req.body)
+            const {restaurantId, foodId} = req.body
+            const userId = /*req.user.id*/1 //for testing purpose
+            const newFavoriteFood = await FavoriteFood.create({userId, restaurantId, foodId})
             res.status(201).json({favoriteFood: newFavoriteFood})
         } catch(err) {
             next(err)
@@ -66,7 +68,7 @@ module.exports = class FavoriteFoodController {
     static async deleteFavoriteFood(req, res, next) {
         try {
             const favoriteFoodId = Number(req.params.id)
-            const isFavoriteFoodDeleted = await FavoriteFood.destroy({where:{id:favoriteFoodId}})
+            await FavoriteFood.destroy({where:{id:favoriteFoodId}})
             res.status(200).json({message:'Favorite food deleted'})
         } catch(err) {
             next(err)
