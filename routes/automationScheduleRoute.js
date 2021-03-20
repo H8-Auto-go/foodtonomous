@@ -4,7 +4,7 @@ const authorize = require('../midlewares/authorize');
 
 const route = require('express').Router();
 
-route.use(auth)
+// route.use(auth)
 route.get('/', AutomationScheduleController.getAllSchedules)
 route.post('/', AutomationScheduleController.addSchedule)
 route.get('/:id', AutomationScheduleController.getOneSchedule)

@@ -1,4 +1,4 @@
-const {Order} = require('../models')
+const {Order, User, Driver, Restaurant, Foods} = require('../models')
 
 class OrderController {
     static async addOrder(req, res) {
@@ -31,8 +31,37 @@ class OrderController {
 
     static async getOrder(req, res, next) {
         try {
-            const orders = await Order.find()
-            res.status(200).json(orders)
+            const id = Number(req.params.id) || 1
+            const {status, User: user, Driver: driver, Restaurant: resto, Food: food} = await Order.findOne({where: {id}, include: [User, Driver, Restaurant, Foods]})
+            res.status(200).json({
+                id, status,
+                user: {
+                    id: user.id,
+                    name: user.name,
+                    saldo: user.saldo,
+                    avatar: user.avatar,
+                    location: JSON.parse(user.location)
+                },
+                driver: {
+                    id: driver.id,
+                    name: driver.name,
+                    saldo: Number(driver.saldo),
+                    avatar: driver.avatar,
+                    location: JSON.parse(driver.location)
+                },
+                restaurant: {
+                    id: resto.id,
+                    name: resto.name,
+                    picture: resto.picture,
+                    location: JSON.parse(resto.location)
+                },
+                food: {
+                    id: food.id,
+                    name: food.name,
+                    price: food.price,
+                    picture: food.picture
+                }
+            })
         } catch (err) {
             next(err)
         }
