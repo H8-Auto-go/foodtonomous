@@ -1,36 +1,34 @@
-const validation = require('validator');
+const {User} = require('../models')
 const { comparePassword } = require('../helpers/bcrypt');
 const generateToken = require('../helpers/jwt')
-const User = require('../models/user')
 class UserController {
     static async register(req, res, next) {
         try {
-            const {email, password} = req.body
-            if(validation.isEmail(email)){
-                const user = new User({email, password})
-                await user.save()
-                res.status(201).json({msg:`success register your email ${user.email}`})
-            }else{
-                throw {name:"customErr", code:400, msg:"invalid email format"}
-            }
+            const result = await User.create(req.body)
+            res.status(201).json({
+                msg: 'sukses register',
+                id: result.id,
+                email: result.email
+            })
         } catch (err) {
             next(err)
         }
-    }
+	}
 
     static async login (req, res, next) {
         try {
             const {email, password} = req.body
-            console.log(email, password, "anjay gaming")
-            const user = await User.findOne({email})
-            if(!user) throw {name:"customErr", code:404, msg:"invalid email password"}
-            if(!comparePassword(password, user.password)) throw {name:"customErr", code:404, msg:"invalid email password"}
-            const access_token = generateToken({
-                id: user._id,
-                email: user.email,
-                role: user.role
-            })
-            res.status(200).json({access_token})
+            const user = User.findOne({where:{email}})
+            if(!user) throw {name:'customError', code :401,msg: 'Invalid email or password'}
+            const compare = comparePassword(password, user.password)
+			if(!compare) throw {name:'customError', code :401,msg: 'Invalid email or password'}
+            const accsess_token = generateToken({
+				id:user.id,
+				email:user.email,
+                role:user.role,
+                name:user.name
+			})
+			res.status(200).json({accsess_token})
         } catch (err) {
             next(err)
         }

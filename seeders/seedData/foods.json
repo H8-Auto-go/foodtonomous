@@ -1,0 +1,27 @@
+[
+    {
+        "name":"lele goreng",
+        "price":13000,
+        "restaurantId":1,
+        "picture":"https://selerasa.com/wp-content/uploads/2015/09/images_ikan_ikan-lele-goreng-1200x724.jpg"
+    },
+    {
+        "name":"ayam goreng",
+        "price":15000,
+        "restaurantId":1,
+        "picture":"https://awsimages.detik.net.id/community/media/visual/2020/01/29/d26944bc-4731-4dda-bbd6-e9b9de25fbe2_43.jpeg?w=700&q=90"
+    },
+    {
+        "name":"ayam goreng enak",
+        "price":11000,
+        "restaurantId":2,
+        "picture":"https://awsimages.detik.net.id/community/media/visual/2020/01/29/d26944bc-4731-4dda-bbd6-e9b9de25fbe2_43.jpeg?w=700&q=90"
+    },
+    {
+        "name":"paha goreng enak",
+        "price":10000,
+        "restaurantId":2,
+        "picture":"https://awsimages.detik.net.id/community/media/visual/2020/01/29/d26944bc-4731-4dda-bbd6-e9b9de25fbe2_43.jpeg?w=700&q=90"
+    }
+    
+]

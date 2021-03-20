@@ -1,0 +1,18 @@
+[
+    {
+        "name":"pecel lele barokah",
+        "picture":"https://awsimages.detik.net.id/community/media/visual/2018/02/07/de109c12-a39d-40d0-a3d0-ad3a5b2ca1d7_169.jpeg?w=700&q=90",
+        "location":{
+            "long":106.586754,
+            "lat":-6.170284
+        }
+    },
+    {
+        "name":"sabana",
+        "picture":"https://lh3.googleusercontent.com/proxy/zN02ZpIIpinIyyDV9isb4Z5w3FcXoy0aLwy-MFxafGioajhcKCHH9FzzFQeU_ndI97QMpFk_tt-2anwZnLxEEsITRxUCtaY0ukwX8t6-Hgm2D00Ebgv0sySstFKwQmdvxqPeVhj3HOtMOdSAd7yj553wNHNQtSdLnX0",
+        "location":{
+            "long":106.585419,
+            "lat":-6.171638
+        }
+    }
+]

@@ -1,13 +1,31 @@
-const Order = require("../models/order")
+const {Order} = require('../models')
 
 class OrderController {
     static async addOrder(req, res) {
         try {
-            const order = new Order(req.body)
-            await order.save()
+            const {restaurantId, foodId } = req.body
+            const {id} = res.user
+            const order = await Order.create({
+                restaurantId,
+                foodId,
+                userId: id,
+            })
             res.status(201).json(order)
         } catch (err) {
             res.status(400).json(err)
+        }
+    }
+
+    static async addOrderDriver(req, res, next){
+        try {
+            const orderId = +req.params.id
+            const {id} = req.user
+            const apdatedOrder = await Order.update({
+                driverId:id
+            },{where:{id:orderId}})
+            res.status(200).json(apdatedOrder)
+        } catch (err) {
+            next(err)
         }
     }
 
@@ -22,10 +40,9 @@ class OrderController {
 
     static async updateStatus(req, res, next) {
         try {
-            const order = await Order.findByIdAndUpdate(req.params.id, req.body)
-            if(!order) throw {name:"customErr", code:404, msg:"order not found"}
-
-            res.status(200).json({msg:'Success update status'})
+            const orderId = +req.params.id
+            const updateStatus = await Order.update({status:req.body}, {where:{id:orderId}})
+            res.status(200).json(updateStatus)
         } catch (err) {
             next(err)
         }
@@ -33,7 +50,7 @@ class OrderController {
 
     static async deleteOrder(req, res, next) {
         try {
-            const order = await Order.findByIdAndDelete(req.params.id)
+            const orderId = +req.params.id
             if(!order) throw {name:"customErr", code:404, msg:"order not found"}
             res.status(200).json({msg: 'Success delete order'})
         } catch (err) {

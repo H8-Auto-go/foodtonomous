@@ -1,0 +1,204 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "email": "angga@xavier.com",
+            "password": "anjay1",
+            "avatar": "https://avatars.dicebear.com/api/avataaars/angga.svg?style=circle`",
+            "role": "user",
+            "location": {
+                "lat": 123.3,
+                "long": 32
+            }
+        },
+        {
+            "id": 2,
+            "email": "amos@xavier.com",
+            "password": "grinddd",
+            "avatar": "https://avatars.dicebear.com/api/avataaars/amos.svg?style=circle`",
+            "role": "driver",
+            "location": {
+                "lat": 123.3,
+                "long": 32
+            }
+        }
+    ],
+    "foods": [
+        {
+            "id": 1,
+            "name": "ayam goreng",
+            "price": 14000,
+            "picture": "https://awsimages.detik.net.id/community/media/visual/2020/04/14/230f18a6-7396-41d8-85f1-2ce9a5756a20.jpeg?w=700&q=90",
+            "restaurant": {
+                "id": 1,
+                "name": "ahuy goreng dadakan",
+                "location": {
+                    "lat": 113.3,
+                    "long": -14.32
+                }
+            }
+        },
+        {
+            "id": 2,
+            "name": "paket tahu goreng",
+            "price": 24000,
+            "picture": "https://img-global.cpcdn.com/recipes/853432226b3e567a/680x482cq70/tahu-goreng-original-foto-resep-utama.jpg",
+            "restaurant": {
+                "id": 1,
+                "name": "ahuy goreng dadakan",
+                "location": {
+                    "lat": 113.3,
+                    "long": -14.32
+                }
+            }
+        }
+    ],
+    "restaurants": [
+        {
+            "id": 1,
+            "name": "ahuy goreng dadakan",
+            "picture": "https://awsimages.detik.net.id/community/media/visual/2018/02/07/de109c12-a39d-40d0-a3d0-ad3a5b2ca1d7_169.jpeg?w=700&q=90",
+            "location": {
+                "lat": 113.3,
+                "long": -14.32
+            },
+            "foods": [
+                {
+                    "id": 1,
+                    "name": "ayam goreng",
+                    "price": 14000,
+                    "picture": "https://awsimages.detik.net.id/community/media/visual/2020/04/14/230f18a6-7396-41d8-85f1-2ce9a5756a20.jpeg?w=700&q=90"
+                },
+                {
+                    "id": 2,
+                    "name": "paket tahu goreng",
+                    "price": 24000,
+                    "picture": "https://img-global.cpcdn.com/recipes/853432226b3e567a/680x482cq70/tahu-goreng-original-foto-resep-utama.jpg"
+                }
+            ]
+        }
+    ],
+    "favoriteFoods": [
+        {
+            "id": 1,
+            "userId": 1,
+            "restaurant": {
+                "id": 1,
+                "name": "ahuy goreng dadakan",
+                "location": {
+                    "lat": 113.3,
+                    "long": -14.32
+                }
+            },
+            "food": {
+                "id": 2,
+                "name": "paket tahu goreng",
+                "price": 24000,
+                "picture": "https://img-global.cpcdn.com/recipes/853432226b3e567a/680x482cq70/tahu-goreng-original-foto-resep-utama.jpg"
+            }
+        }
+    ],
+    "automationSchedule": [
+        {
+            "id": 1,
+            "time": "13.00",
+            "restaurant": {
+                "id": 1,
+                "name": "ahuy goreng dadakan",
+                "location": {
+                    "lat": 113.3,
+                    "long": -14.32
+                }
+            },
+            "food": {
+                "id": 1,
+                "name": "ayam goreng",
+                "price": 14000,
+                "picture": "https://awsimages.detik.net.id/community/media/visual/2020/04/14/230f18a6-7396-41d8-85f1-2ce9a5756a20.jpeg?w=700&q=90"
+            }
+        }
+    ],
+    "orders": [
+        {
+            "status": "on going to restaurant",
+            "user": {
+                "id": 1,
+                "email": "angga@xavier.com",
+                "avatar": "https://avatars.dicebear.com/api/avataaars/angga.svg?style=circle`",
+                "role": "user",
+                "location": {
+                    "lat": 123.3,
+                    "long": 32
+                }
+            },
+            "driver": {
+                "id": 2,
+                "email": "amos@xavier.com",
+                "avatar": "https://avatars.dicebear.com/api/avataaars/amos.svg?style=circle`",
+                "role": "driver",
+                "location": {
+                    "lat": 123.3,
+                    "long": 32
+                }
+            },
+            "restaurant": {
+                "id": 1,
+                "name": "ahuy goreng dadakan",
+                "picture": "https://awsimages.detik.net.id/community/media/visual/2018/02/07/de109c12-a39d-40d0-a3d0-ad3a5b2ca1d7_169.jpeg?w=700&q=90",
+                "location": {
+                    "lat": 113.3,
+                    "long": -14.32
+                }
+            },
+            "food": {
+                "id": 1,
+                "name": "ayam goreng",
+                "price": 14000,
+                "picture": "https://awsimages.detik.net.id/community/media/visual/2020/04/14/230f18a6-7396-41d8-85f1-2ce9a5756a20.jpeg?w=700&q=90"
+            }
+        }
+    ],
+    "orderHistory": [
+        {
+            "id": 1,
+            "order": {
+                "status": "on going to restaurant",
+                "user": {
+                    "id": 1,
+                    "email": "angga@xavier.com",
+                    "avatar": "https://avatars.dicebear.com/api/avataaars/angga.svg?style=circle`",
+                    "role": "user",
+                    "location": {
+                        "lat": 123.3,
+                        "long": 32
+                    }
+                },
+                "driver": {
+                    "id": 2,
+                    "email": "amos@xavier.com",
+                    "avatar": "https://avatars.dicebear.com/api/avataaars/amos.svg?style=circle`",
+                    "role": "driver",
+                    "location": {
+                        "lat": 123.3,
+                        "long": 32
+                    }
+                },
+                "restaurant": {
+                    "id": 1,
+                    "name": "ahuy goreng dadakan",
+                    "picture": "https://awsimages.detik.net.id/community/media/visual/2018/02/07/de109c12-a39d-40d0-a3d0-ad3a5b2ca1d7_169.jpeg?w=700&q=90",
+                    "location": {
+                        "lat": 113.3,
+                        "long": -14.32
+                    }
+                },
+                "food": {
+                    "id": 1,
+                    "name": "ayam goreng",
+                    "price": 14000,
+                    "picture": "https://awsimages.detik.net.id/community/media/visual/2020/04/14/230f18a6-7396-41d8-85f1-2ce9a5756a20.jpeg?w=700&q=90"
+                }
+            }
+        }
+    ]
+}

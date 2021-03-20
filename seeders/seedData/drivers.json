@@ -1,0 +1,12 @@
+[
+    {
+        "email": "amos@xavier.com",
+        "password": "1234",
+        "saldo": 500000,
+        "avatar": "https://avatars.dicebear.com/api/avataaars/amos.svg?style=circle`",
+        "location": {
+            "lat": 123.3,
+            "long": 32
+        }
+    }
+]

@@ -1,0 +1,16 @@
+[
+    {
+        "time": "08.00",
+        "userId": 1,
+        "isActive": false,
+        "restaurantId": 1,
+        "foodId": 1
+    },
+    {
+        "time": "13.00",
+        "userId": 1,
+        "isActive": false,
+        "restaurantId": 1,
+        "foodId": 1
+    }
+]

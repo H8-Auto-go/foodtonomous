@@ -1,10 +1,19 @@
 const route = require('express').Router()
-const User = require('./userRoute')
-const Order = require('./orderRoute')
+const userRoutes = require('./userRoute')
+const orderRoutes = require('./orderRoute')
+const foodRoutes = require('./foodRoute')
+const restaurantRoutes = require('./restaurantRoute')
+const automationScheduleRoutes = require('./automationScheduleRoute')
+const favoriteFoodRoutes = require('./favoriteFoodRoute')
 route.get("/", (req, res) => {
-    console.log("iya terhubung")
     res.json({ message: "server is connected" })
 })
-route.use('/users',User)
-route.use('/order',Order)
+
+route.use('/users', userRoutes)
+route.use('/orders', orderRoutes)
+route.use('/foods', foodRoutes)
+route.use('/restaurants', restaurantRoutes)
+// route.use('/favoriteFoods', favoriteFoodRoutes)
+route.use('/automationSchedules', automationScheduleRoutes)
+
 module.exports = route
