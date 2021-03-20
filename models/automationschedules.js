@@ -19,7 +19,8 @@ module.exports = (sequelize, DataTypes) => {
     time: DataTypes.STRING,
     restaurantId: DataTypes.INTEGER,
     foodId: DataTypes.INTEGER,
-    isActive: DataTypes.BOOLEAN
+    isActive: DataTypes.BOOLEAN,
+    userId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'AutomationSchedule',

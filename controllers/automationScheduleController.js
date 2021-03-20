@@ -51,8 +51,9 @@ module.exports = class AutomationScheduleController {
     }
     static async addSchedule(req, res, next) {
         try {
-            const {restaurantId, foodId} = req.body
-            const newSchedule = await AutomationSchedule.create({restaurantId, foodId}, {returning: true})
+            const { time, isActive, restaurantId, foodId} = req.body
+            const userId = /*req.user.id*/ 1
+            const newSchedule = await AutomationSchedule.create({time, isActive, restaurantId, foodId, userId}, {returning: true})
             res.status(201).json({schedule: newSchedule})
         } catch(err) {
             next(err)
@@ -60,8 +61,8 @@ module.exports = class AutomationScheduleController {
     }
     static async updateStatus(req, res, next) {
         try {
-            const scheduleId = Number(req.params)
-            const {isActive} = req.body
+            const scheduleId = Number(req.params.id)
+            const isActive = req.body.isActive === 'true' //masih harus diganti, ini buat percobaan doang
             const updatedSchedule = await AutomationSchedule.update({isActive}, {where: {id:scheduleId}})
             res.status(200).json({schedule: updatedSchedule})
         } catch(err) {
@@ -70,8 +71,8 @@ module.exports = class AutomationScheduleController {
     }
     static async deleteSchedule(req, res, next) {
         try {
-            const scheduleId = Number(req.params)
-            const isScheduleDeleted = await AutomationSchedule.destroy({where: {id:scheduleId}})
+            const scheduleId = Number(req.params.id)
+            await AutomationSchedule.destroy({where: {id:scheduleId}})
             res.status(200).json({message: 'automation schedule deleted'})
         } catch(err) {
             next(err)

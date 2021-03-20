@@ -7,7 +7,9 @@ const route = require('express').Router();
 // route.use(auth)
 route.post('/', OrderController.addOrder)
 route.get('/', OrderController.getOrder)
-route.patch('/:id', authorize, OrderController.updateStatus)
+route.patch('/loc-update/:id', OrderController.patchLocation)
+route.put('/:id', OrderController.addOrderDriver)
+route.patch('/:id', OrderController.updateStatus)
 route.delete('/:id', OrderController.deleteOrder)
 
 
