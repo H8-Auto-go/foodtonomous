@@ -1,5 +1,6 @@
 const route = require('express').Router()
 const userRoutes = require('./userRoute')
+const driverRoutes = require('./driverRoute')
 const orderRoutes = require('./orderRoute')
 const foodRoutes = require('./foodRoute')
 const restaurantRoutes = require('./restaurantRoute')
@@ -9,7 +10,8 @@ route.get("/", (req, res) => {
     res.json({ message: "server is connecteddddd" })
 })
 
-route.use('/users', userRoutes)
+route.use('/', userRoutes)
+route.use('/', driverRoutes)
 route.use('/orders', orderRoutes)
 route.use('/foods', foodRoutes)
 route.use('/restaurants', restaurantRoutes)
