@@ -8,6 +8,7 @@
         "location": {
             "lat": 123.3,
             "long": 32
-        }
+        },
+        "role":"user"
     }
 ]
