@@ -3,27 +3,26 @@ const {Order, User, Driver, Restaurant, Foods} = require('../models')
 class OrderController {
     static async createOrder({userId, foodId, restaurantId}) {
         try {
-            return await Order.create({
+            const {id} = await Order.create({
                 status: 'pending',
                 restaurantId,
                 foodId,
                 userId,
             })
+            return await Order.findByPk(id, {include: [User, Foods, Restaurant]})
         } catch (err) {
             console.log(err)
         }
     }
 
-    static async addOrderDriver(req, res, next){
+    static async addOrderDriver({ id, driverId }){
         try {
-            const orderId = +req.params.id
-            const driverId = /*req.user.id*/ 1
-            const apdatedOrder = await Order.update({
+            return await Order.update({
+                status: 'on going',
                 driverId
-            },{where:{id:orderId}})
-            res.status(200).json(apdatedOrder)
+            }, {where: {id}, returning: true})
         } catch (err) {
-            next(err)
+            console.log(err)
         }
     }
 
@@ -65,20 +64,16 @@ class OrderController {
         }
     }
 
-    static async updateStatus(req, res, next) {
+    static async updateStatus({status, id}) {
         try {
-            const orderId = +req.params.id
-            const {status} = req.body
-            const updateStatus = await Order.update({status}, {where:{id:orderId}})
-            res.status(200).json(updateStatus)
+            return await Order.update({status}, {where: {id}})
         } catch (err) {
-            next(err)
+            console.log(err)
         }
     }
 
     static async patchLocation(req, res, next) {
         try {
-            console.log('masuk')
             const orderId = +req.params.id
             const {lat, long} = req.body
             const location = JSON.stringify({lat, long})
