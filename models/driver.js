@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const { hashPassword } = require('../helpers/bcrypt');
 module.exports = (sequelize, DataTypes) => {
   class Driver extends Model {
     /**
@@ -15,14 +16,33 @@ module.exports = (sequelize, DataTypes) => {
   };
   Driver.init({
     name: DataTypes.STRING,
-    email: DataTypes.STRING,
+    email: {
+      type:DataTypes.STRING,
+      unique:{
+        args:true,
+        msg:'email already exist'
+      },
+      validate:{
+        isEmail:{
+          args:true,
+          msg:'Invalid format email'
+        }
+      }
+    },
     saldo: DataTypes.STRING,
     password: DataTypes.STRING,
     location: DataTypes.STRING,
-    avatar: DataTypes.STRING
+    avatar: DataTypes.STRING,
+    role: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Driver',
+    hooks: {
+      beforeBulkCreate: driver => {
+        driver.password = hashPassword(driver.password)
+        driver.role = 'driver'
+      }
+    }
   });
   return Driver;
 };

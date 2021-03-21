@@ -1,11 +1,7 @@
 const request = require('supertest');
 const app = require('../app')
-const mongoose = require('mongoose')
 
-afterAll(done => {
-    mongoose.connection.close()
-    done()
-})
+
 
 describe('POST /login', () => {
     it('should response with 200 status code when login succeed', (done) => {
