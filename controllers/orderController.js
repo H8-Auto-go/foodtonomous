@@ -1,18 +1,16 @@
 const {Order, User, Driver, Restaurant, Foods} = require('../models')
 
 class OrderController {
-    static async addOrder(req, res) {
+    static async createOrder({userId, foodId, restaurantId}) {
         try {
-            const {restaurantId, foodId} = req.body
-            const userId = /*res.user.id*/ 1
-            const order = await Order.create({
+            return await Order.create({
+                status: 'pending',
                 restaurantId,
                 foodId,
                 userId,
             })
-            res.status(201).json(order)
         } catch (err) {
-            res.status(400).json(err)
+            console.log(err)
         }
     }
 
