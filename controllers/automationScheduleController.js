@@ -17,7 +17,8 @@ module.exports = class AutomationScheduleController {
                     food: {
                         id: food.id,
                         name: food.name,
-                        price: food.price
+                        price: food.price,
+                        picture: food.picture
                     }
                 }
             })

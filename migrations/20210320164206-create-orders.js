@@ -11,8 +11,13 @@ module.exports = {
       status: {
         type: Sequelize.STRING
       },
+      socketUserId: {
+        type: Sequelize.STRING,
+      },
+      socketDriverId: {
+        type: Sequelize.STRING
+      },
       userId: {
-        type: Sequelize.INTEGER,
         type: Sequelize.INTEGER,
         references: {
           model: 'Users',
@@ -22,7 +27,6 @@ module.exports = {
         onDelete: 'cascade'
       },
       driverId: {
-        type: Sequelize.INTEGER,
         type: Sequelize.INTEGER,
         references: {
           model: 'Drivers',

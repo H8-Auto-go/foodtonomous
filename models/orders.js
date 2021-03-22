@@ -19,6 +19,8 @@ module.exports = (sequelize, DataTypes) => {
   };
   Order.init({
     status: DataTypes.STRING,
+    socketUserId: DataTypes.STRING,
+    socketDriverId: DataTypes.STRING,
     userId: DataTypes.INTEGER,
     driverId: DataTypes.INTEGER,
     restaurantId: DataTypes.INTEGER,

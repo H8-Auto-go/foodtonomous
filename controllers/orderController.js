@@ -1,40 +1,41 @@
 const {Order, User, Driver, Restaurant, Foods} = require('../models')
 
 class OrderController {
-    static async addOrder(req, res) {
+    static async createOrder({userId, foodId, restaurantId}, socketUserId) {
         try {
-            const {restaurantId, foodId} = req.body
-            const userId = /*res.user.id*/ 1
-            const order = await Order.create({
+            const {id} = await Order.create({
+                status: 'pending',
+                socketUserId,
                 restaurantId,
                 foodId,
                 userId,
             })
-            res.status(201).json(order)
+            return await Order.findByPk(id, {include: [User, Foods, Restaurant]})
         } catch (err) {
-            res.status(400).json(err)
+            console.log(err)
         }
     }
 
-    static async addOrderDriver(req, res, next){
+    static async addOrderDriver({ id, driverId }, socketDriverId){
         try {
-            const orderId = +req.params.id
-            const driverId = /*req.user.id*/ 1
-            const apdatedOrder = await Order.update({
+            return await Order.update({
+                status: 'on going',
+                socketDriverId,
                 driverId
-            },{where:{id:orderId}})
-            res.status(200).json(apdatedOrder)
+            }, {where: {id}, returning: true})
         } catch (err) {
-            next(err)
+            console.log(err)
         }
     }
 
     static async getOrder(req, res, next) {
         try {
             const id = Number(req.params.id) || 1
-            const {status, User: user, Driver: driver, Restaurant: resto, Food: food} = await Order.findOne({where: {id}, include: [User, Driver, Restaurant, Foods]})
+            const {status, socketUserId, socketDriverId, User: user, Driver: driver, Restaurant: resto, Food: food} = await Order.findOne({where: {id}, include: [User, Driver, Restaurant, Foods]})
             res.status(200).json({
                 id, status,
+                socketUserId,
+                socketDriverId,
                 user: {
                     id: user.id,
                     name: user.name,
@@ -67,23 +68,19 @@ class OrderController {
         }
     }
 
-    static async updateStatus(req, res, next) {
+    static async updateStatus({status, id}) {
         try {
-            const orderId = +req.params.id
-            const {status} = req.body
-            const updateStatus = await Order.update({status}, {where:{id:orderId}})
-            res.status(200).json(updateStatus)
+            return await Order.update({status}, {where: {id}})
         } catch (err) {
-            next(err)
+            console.log(err)
         }
     }
 
     static async patchLocation(req, res, next) {
         try {
-            console.log('masuk')
             const orderId = +req.params.id
-            const {lat, long} = req.body
-            const location = JSON.stringify({lat, long})
+            const {latitude, longitude} = req.body
+            const location = JSON.stringify({latitude, longitude})
             const {driverId} = await Order.findByPk(orderId)
             await Driver.update({location}, {where: {id: driverId}})
             res.status(200).json({message: "location updated"})

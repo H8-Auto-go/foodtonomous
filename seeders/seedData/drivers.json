@@ -6,8 +6,8 @@
         "saldo": 500000,
         "avatar": "https://avatars.dicebear.com/api/avataaars/amos.svg?style=circle`",
         "location": {
-            "lat": 123.3,
-            "long": 32
+            "latitude": -6.9479412,
+            "longitude": 107.6240939
         },
         "role":"driver"
     }
