@@ -12,10 +12,11 @@ io.on('connection', socket => {
   //   console.log(message)
   // })
   // socket.on('driver login', driver => {
+  //   console.log('ini driver', driver);
   //   // driversRoom.push({socketId: socket.id, driver, room: driver.role})
   //   // console.log(driversRoom, '<<drivrom')
-  //   socket.join(driver.role)
-  //   let clients = io.sockets.adapter.rooms[driver.role]
+  //   // socket.join(driver.role)
+  //   // let clients = io.sockets.adapter.rooms[driver.role]
   //   // console.log(clients, '<<<')
   //   // console.log(socket.join())
   // })

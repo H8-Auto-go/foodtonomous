@@ -75,8 +75,8 @@ class OrderController {
     static async patchLocation(req, res, next) {
         try {
             const orderId = +req.params.id
-            const {lat, long} = req.body
-            const location = JSON.stringify({lat, long})
+            const {latitude, longitude} = req.body
+            const location = JSON.stringify({latitude, longitude})
             const {driverId} = await Order.findByPk(orderId)
             await Driver.update({location}, {where: {id: driverId}})
             res.status(200).json({message: "location updated"})

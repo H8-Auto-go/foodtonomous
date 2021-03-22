@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
     hooks: {
       beforeCreate: (user) => {
         user.password = hashPassword(user.password)
-        user.role = 'user'
+        user.avatar = 'https://avatars.dicebear.com/api/avataaars/angga.svg?style=circle'
       }
     }
   });

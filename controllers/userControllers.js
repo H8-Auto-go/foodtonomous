@@ -4,12 +4,24 @@ const {generateToken, decodeToken} = require('../helpers/jwt')
 class UserController {
     static async register(req, res, next) {
         try {
-            const result = await User.create(req.body)
-            res.status(201).json({
-                msg: 'sukses register',
-                id: result.id,
-                email: result.email
-            })
+            console.log(req.body);
+            if (req.body.role === 'user'){
+                const result = await User.create(req.body)
+                res.status(201).json({
+                    msg: 'sukses register',
+                    id: result.id,
+                    email: result.email,
+                    role: result.role
+                })
+            } else if (req.body.role === 'driver'){
+                const result = await Driver.create(req.body)
+                res.status(201).json({
+                    msg: 'sukses register',
+                    id: result.id,
+                    email: result.email,
+                    role: result.role
+                })
+            }
         } catch (err) {
             next(err)
         }
