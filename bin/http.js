@@ -2,11 +2,32 @@ const app = require('../app')
 const PORT = 3000
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
-// const driversRoom = []
-// const orderList = []
+const doSomething = require('../cronJob/cron')
+
+
+async function createOrder(socket, order) {
+  const createdOrder = await OrderController.createOrder(order, socket.id)
+  socket.broadcast.emit("incoming order", createdOrder)
+}
 const OrderController = require('../controllers/OrderController')
 io.on('connection', socket => {
   console.log('a driver is connected', socket.id)
+  doSomething(async (newOrder) => {
+    const createdOrder = await OrderController.createOrder(newOrder)
+    socket.broadcast.emit("incoming order", createdOrder)
+    // socket.join('driver')
+    // socket.to('driver').emit('incoming order', createdOrder)
+  })
+  // setTimeout(() => {
+  //   const dateNow = new Date()
+  //   const automationTime = await OrderController()
+  //   if(dateNow === '18.00') {
+  //     const {userId, restaurantId, foodId} = await AutomationController.findByPk(automationId)
+  //     await createOrder(socket, {status: 'pending', userId, restaurantId, foodId})
+  //   } else {
+  //
+  //   }
+  // }, 60000)
   // io.emit('hello', 'welcome to the club bro')
   // socket.on('testing', message => {
   //   console.log(message)
@@ -22,16 +43,12 @@ io.on('connection', socket => {
   // })
   socket.on('create order', async order => {
     console.log(socket.id, '<<<<socketUserId')
-    const createdOrder = await OrderController.createOrder(order)
-    // console.log(createdOrder)
-    // orderList.push(order)
-    // console.log(orderList)
-    // console.log(createdOrder)
-    socket.broadcast.emit("incoming order", createdOrder)
+    await createOrder(socket, order)
   })
   socket.on('order confirmation', async ({id, driverId}) => {
     console.log(socket.id, '<<< socketDriverId')
-    const updatedOrder = await OrderController.addOrderDriver({id, driverId})
+    const updatedOrder = await OrderController.addOrderDriver({id, driverId}, socket.id)
+    //harusnya dari sini udah mulai private, jadi code ini ada kemungkinan nantinya di refactor
     socket.broadcast.emit("on going order", updatedOrder)
   })
   socket.on('order done', async ({status, id}) => {

@@ -1,10 +1,11 @@
 const {Order, User, Driver, Restaurant, Foods} = require('../models')
 
 class OrderController {
-    static async createOrder({userId, foodId, restaurantId}) {
+    static async createOrder({userId, foodId, restaurantId}, socketUserId) {
         try {
             const {id} = await Order.create({
                 status: 'pending',
+                socketUserId,
                 restaurantId,
                 foodId,
                 userId,
@@ -15,10 +16,11 @@ class OrderController {
         }
     }
 
-    static async addOrderDriver({ id, driverId }){
+    static async addOrderDriver({ id, driverId }, socketDriverId){
         try {
             return await Order.update({
                 status: 'on going',
+                socketDriverId,
                 driverId
             }, {where: {id}, returning: true})
         } catch (err) {
@@ -29,9 +31,11 @@ class OrderController {
     static async getOrder(req, res, next) {
         try {
             const id = Number(req.params.id) || 1
-            const {status, User: user, Driver: driver, Restaurant: resto, Food: food} = await Order.findOne({where: {id}, include: [User, Driver, Restaurant, Foods]})
+            const {status, socketUserId, socketDriverId, User: user, Driver: driver, Restaurant: resto, Food: food} = await Order.findOne({where: {id}, include: [User, Driver, Restaurant, Foods]})
             res.status(200).json({
                 id, status,
+                socketUserId,
+                socketDriverId,
                 user: {
                     id: user.id,
                     name: user.name,
