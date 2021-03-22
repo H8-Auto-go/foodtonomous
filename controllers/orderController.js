@@ -18,11 +18,46 @@ class OrderController {
 
     static async addOrderDriver({ id, driverId }, socketDriverId){
         try {
-            return await Order.update({
+            await Order.update({
                 status: 'on going',
                 socketDriverId,
                 driverId
             }, {where: {id}, returning: true})
+            const {status, socketUserId, User: user, Driver: driver, Restaurant: resto, Food: food} =
+              await Order.findByPk(id ,{include: [User, Driver, Restaurant, Foods]})
+            return {
+                id, status,
+                socketUserId,
+                socketDriverId,
+                user: {
+                    id: user.id,
+                    name: user.name,
+                    saldo: user.saldo,
+                    role: user.role,
+                    avatar: user.avatar,
+                    location: JSON.parse(user.location)
+                },
+                driver: {
+                    id: driver.id,
+                    name: driver.name,
+                    saldo: Number(driver.saldo),
+                    avatar: driver.avatar,
+                    role: driver.role,
+                    location: JSON.parse(driver.location)
+                },
+                restaurant: {
+                    id: resto.id,
+                    name: resto.name,
+                    picture: resto.picture,
+                    location: JSON.parse(resto.location)
+                },
+                food: {
+                    id: food.id,
+                    name: food.name,
+                    price: food.price,
+                    picture: food.picture
+                }
+            }
         } catch (err) {
             console.log(err)
         }

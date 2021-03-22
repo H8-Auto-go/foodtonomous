@@ -9,8 +9,8 @@
     {
         "time": "13.00",
         "userId": 1,
-        "isActive": false,
-        "restaurantId": 1,
-        "foodId": 1
+        "isActive": true,
+        "restaurantId": 2,
+        "foodId": 2
     }
 ]

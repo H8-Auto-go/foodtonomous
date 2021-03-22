@@ -62,8 +62,9 @@ module.exports = class AutomationScheduleController {
     }
     static async updateStatus(req, res, next) {
         try {
+            console.log(req.params.id, req.body)
             const scheduleId = Number(req.params.id)
-            const isActive = req.body.isActive === 'true' //masih harus diganti, ini buat percobaan doang
+            const isActive = req.body.isActive //masih harus diganti, ini buat percobaan doang
             const updatedSchedule = await AutomationSchedule.update({isActive}, {where: {id:scheduleId}})
             res.status(200).json({schedule: updatedSchedule})
         } catch(err) {

@@ -15,6 +15,7 @@ io.on('connection', socket => {
   console.log('a driver is connected', socket.id)
   doSomething(async (newOrder) => {
     const createdOrder = await OrderController.createOrder(newOrder)
+    console.log('testt')
     socket.broadcast.emit("incoming order", createdOrder)
     // socket.join('driver')
     // socket.to('driver').emit('incoming order', createdOrder)
@@ -53,10 +54,11 @@ io.on('connection', socket => {
     await createOrder(socket, order)
   })
   socket.on('order confirmation', async ({id, driverId}) => {
-    console.log(socket.id, '<<< socketDriverId')
+    console.log(socket.id, driverId, '<<< socketDriverId')
     const updatedOrder = await OrderController.addOrderDriver({id, driverId}, socket.id)
-    //harusnya dari sini udah mulai private, jadi code ini ada kemungkinan nantinya di 
+    //harusnya dari sini udah mulai private, jadi code ini ada kemungkinan nantinya di
     //find lagi
+    // console.log('satu kali', 1)
     socket.broadcast.emit("on going order", updatedOrder)
   })
   socket.on('order done', async ({status, id}) => {
