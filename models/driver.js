@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
     hooks: {
       beforeCreate: driver => {
         driver.password = hashPassword(driver.password)
-        driver.avatar = 'https://avatars.dicebear.com/api/avataaars/angga.svg?style=circle'
+        driver.avatar = `https://avatars.dicebear.com/api/avataaars/${driver.name}.svg?style=circle`
       }
     }
   });

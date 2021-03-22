@@ -10,6 +10,7 @@ async function createOrder(socket, order) {
   socket.broadcast.emit("incoming order", createdOrder)
 }
 const OrderController = require('../controllers/OrderController')
+const DriverController = require('../controllers/driverController')
 io.on('connection', socket => {
   console.log('a driver is connected', socket.id)
   doSomething(async (newOrder) => {
@@ -22,7 +23,8 @@ io.on('connection', socket => {
   //   const dateNow = new Date()
   //   const automationTime = await OrderController()
   //   if(dateNow === '18.00') {
-  //     const {userId, restaurantId, foodId} = await AutomationController.findByPk(automationId)
+  //     const {userId, restaurantId, foodId} = await AutomationC
+    // console.log('apakah ini keluar')ontroller.findByPk(automationId)
   //     await createOrder(socket, {status: 'pending', userId, restaurantId, foodId})
   //   } else {
   //
@@ -38,9 +40,14 @@ io.on('connection', socket => {
   //   // console.log(driversRoom, '<<drivrom')
   //   // socket.join(driver.role)
   //   // let clients = io.sockets.adapter.rooms[driver.role]
-  //   // console.log(clients, '<<<')
+  //   // consolei.log(clients, '<<<')v
   //   // console.log(socket.join())
-  // })
+  // })d
+
+  socket.on('update location driver', async ({time, email, location}) => {
+    console.log('check setiap 3 detik', time)
+    // const updatedLocationDriver = OrderController.ppatchLocation({location: JSON.stringify(location)}, {where:{id}})
+  })
   socket.on('create order', async order => {
     console.log(socket.id, '<<<<socketUserId')
     await createOrder(socket, order)
@@ -48,7 +55,8 @@ io.on('connection', socket => {
   socket.on('order confirmation', async ({id, driverId}) => {
     console.log(socket.id, '<<< socketDriverId')
     const updatedOrder = await OrderController.addOrderDriver({id, driverId}, socket.id)
-    //harusnya dari sini udah mulai private, jadi code ini ada kemungkinan nantinya di refactor
+    //harusnya dari sini udah mulai private, jadi code ini ada kemungkinan nantinya di 
+    //find lagi
     socket.broadcast.emit("on going order", updatedOrder)
   })
   socket.on('order done', async ({status, id}) => {

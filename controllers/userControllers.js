@@ -29,10 +29,10 @@ class UserController {
 
     static async getUser(req, res, next) {
         try {
-            // console.log(req.headers.access_token)
             const data = decodeToken(req.headers.access_token)
-            // console.log(data)
-            const {id, name, email, saldo, location, avatar, role} = data.role === 'user'?await User.findByPk(data.id):await Driver.findByPk((data.id))
+            const {id, name, email, saldo, location, avatar, role} = data.role === 'user'
+                ? await User.findByPk(data.id)
+                : await Driver.findByPk(data.id)
             res.status(200).json({
                 id, name, email, saldo,
                 avatar, role,
@@ -46,12 +46,12 @@ class UserController {
 
     static async login(req, res, next) {
         try {
-            const { email, password } = req.body
-            // console.log(email, password)
+            const { email, password, location } = req.body
             const user = await User.findOne({ where: { email } })
             if (!user) throw { name: 'customError', code: 401, msg: 'Invalid email or password' }
             const compare = await comparePassword(password, user.password)
             if (!compare) throw { name: 'customError', code: 401, msg: 'Invalid email or password' }
+            const updatedLocationUser = await User.update({location: JSON.stringify(location)}, {where:{email}})
             const access_token = generateToken({
                 id: user.id,
                 email: user.email,
