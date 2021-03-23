@@ -44,25 +44,24 @@ io.on('connection', socket => {
   //   // console.log(socket.join())
   // })d
 
-  socket.on('update location driver', async ({time, email, location}) => {
-    console.log('check setiap 3 detik', time)
-    // const updatedLocationDriver = OrderController.ppatchLocation({location: JSON.stringify(location)}, {where:{id}})
-  })
+  // socket.on('update location driver', async ({time, email, location}) => {
+  //   console.log('check setiap 3 detik', time)
+  //   // const updatedLocationDriver = OrderController.ppatchLocation({location: JSON.stringify(location)}, {where:{id}})
+  // })
   socket.on('create order', async order => {
     console.log(socket.id, '<<<<socketUserId')
     await createOrder(socket, order)
   })
-  socket.on('order confirmation', async ({id, driverId}) => {
-    console.log(socket.id, '<<< socketDriverId')
-    const updatedOrder = await OrderController.addOrderDriver({id, driverId}, socket.id)
-    //harusnya dari sini udah mulai private, jadi code ini ada kemungkinan nantinya di 
-    //find lagi
-    socket.broadcast.emit("on going order", updatedOrder)
-  })
-  socket.on('order done', async ({status, id}) => {
-    const updatedOrderStatus = await OrderController.updateStatus({status, id})
-    socket.broadcast.emit('give a rating')
-  })
+  // socket.on('order confirmation', async ({id, driverId}) => {
+  //   console.log(socket.id, '<<< socketDriverId')
+  //   const updatedOrder = await OrderController.addOrderDriver({id, driverId}, socket.id)
+  //   //harusnya dari sini udah mulai private, jadi code ini ada kemungkinan nantinya di 
+  //   //find lagi
+  //   socket.broadcast.emit("on going order", updatedOrder)
+  // })
+  // socket.on('order done', async ({status, id}) => {
+  //   const updatedOrderStatus = await OrderController.updateStatus({status, id})
+  //   socket.broadcast.emit('give a rating')
+  // })
 });
-
-http.listen(PORT, () => console.log(`server running on port:${PORT}`))
+exports.server =  http.listen(PORT, () => console.log(`server running on port:${PORT}`))

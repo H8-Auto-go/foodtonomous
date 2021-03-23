@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for foodtonomous-server/routes/automationScheduleRoute.js</title>
+    <title>Code coverage report for foodtonomous-server/cronJob/cron.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">foodtonomous-server/routes</a> automationScheduleRoute.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">foodtonomous-server/cronJob</a> cron.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>10/10</span>
+                <span class='fraction'>9/12</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>1/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>10/10</span>
+                <span class='fraction'>9/12</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -71,34 +71,34 @@
 <a name='L12'></a><a href='#L12'>12</a>
 <a name='L13'></a><a href='#L13'>13</a>
 <a name='L14'></a><a href='#L14'>14</a>
-<a name='L15'></a><a href='#L15'>15</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
+<a name='L15'></a><a href='#L15'>15</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const AutomationScheduleController = require('../controllers/automationScheduleController');
-const auth = require('../midlewares/auth');
-&nbsp;
-const route = require('express').Router();
-&nbsp;
-route.use(auth)
-route.get('/', AutomationScheduleController.getAllSchedules)
-route.post('/', AutomationScheduleController.addSchedule)
-route.get('/:id', AutomationScheduleController.getOneSchedule)
-route.patch('/:id', AutomationScheduleController.updateStatus)
-route.delete('/:id', AutomationScheduleController.deleteSchedule)
-&nbsp;
-&nbsp;
-module.exports = route
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const {AutomationSchedule} = require('../models')
+const CronJob = require('cron').CronJob;
+const time = [{automationId: 1, time: '14.28'}, {automationId: 2, time: '14.29'}]
+let index = 0
+module.exports = function doSomething(callback) {
+  let [hour, minute] = time[index].time.split(".")
+  let timeParsed = `${minute} ${hour} * * * `
+  let job = new CronJob(timeParsed, <span class="fstat-no" title="function not covered" >as</span>ync function() {
+    const {userId, foodId, restaurantId} = <span class="cstat-no" title="statement not covered" >await AutomationSchedule.findByPk(time[index].automationId)</span>
+<span class="cstat-no" title="statement not covered" >    index++</span>
+<span class="cstat-no" title="statement not covered" >    callback({status: 'pending', restaurantId, foodId, userId})</span>
+  }, null, true, 'Asia/Jakarta');
+  job.start();
+}
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->

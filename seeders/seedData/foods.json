@@ -12,16 +12,81 @@
         "picture":"https://awsimages.detik.net.id/community/media/visual/2020/01/29/d26944bc-4731-4dda-bbd6-e9b9de25fbe2_43.jpeg?w=700&q=90"
     },
     {
-        "name":"ayam goreng enak",
-        "price":11000,
+        "name":"rendang",
+        "price":70000,
+        "restaurantId":2,
+        "picture":"https://cdn0-production-images-kly.akamaized.net/Jaxy2d6_YWfUQtxywol-dfTp4e4=/640x480/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/1253731/original/213c98558a7233f0f923c91df2b986f9beef-curry-recipe-stew-beef-in-coconut-curry.jpg"
+    },
+    {
+        "name":"ayamn goreng",
+        "price":10000,
         "restaurantId":2,
         "picture":"https://awsimages.detik.net.id/community/media/visual/2020/01/29/d26944bc-4731-4dda-bbd6-e9b9de25fbe2_43.jpeg?w=700&q=90"
     },
     {
-        "name":"paha goreng enak",
-        "price":10000,
+        "name":"nasi",
+        "price":5000,
         "restaurantId":2,
-        "picture":"https://awsimages.detik.net.id/community/media/visual/2020/01/29/d26944bc-4731-4dda-bbd6-e9b9de25fbe2_43.jpeg?w=700&q=90"
+        "picture":"https://image-cdn.medkomtek.com/EAMBp3WlXXJYTn6wmaiodxZHrDg=/1200x675/smart/klikdokter-media-buckets/medias/2305553/original/086320600_1557224843-Nasi-dan-Obesitas-Adakah-Hubungannya-By-Waraphong-Yuhun-Shutterstock.jpg"
+    },
+    {
+        "name":"bubur ayam aduk",
+        "price":10000,
+        "restaurantId":3,
+        "picture":"https://image.shutterstock.com/image-photo/bubur-ayam-porridge-chicken-260nw-1348505123.jpg"
+    },
+    {
+        "name":"bubur ayam aduk",
+        "price":9000,
+        "restaurantId":3,
+        "picture":"https://kissfmmedan.com/wp-content/uploads/2017/11/Bisnis-Murah-Meriah-Bubur-Ayam-Gerobak.jpg"
+    },
+    {
+        "name":"nasi kucing",
+        "price":3000,
+        "restaurantId":4,
+        "picture":"https://cdn.idntimes.com/content-images/community/2019/12/155271332658394-14750db9-77f5-4ba3-a5bd-1f6690b67e3a-71e3846eed74138dcdeb9cb5c08ff736.png"
+    },
+    {
+        "name":"sate usus",
+        "price":2000,
+        "restaurantId":4,
+        "picture":"https://cdn.yummy.co.id/content-images/images/20201122/Mr1wzFe7UlCPG6bYy8P7sLevOKnVTlkB-31363036303430383635d41d8cd98f00b204e9800998ecf8427e_800x800.jpg"
+    },
+    {
+        "name":"sate telor",
+        "price":2000,
+        "restaurantId":4,
+        "picture":"https://cdn.yummy.co.id/content-images/images/20191222/SaV8EPM9nYDyCtP57xk52SvF5ekNUhnF-31353735373834353637d41d8cd98f00b204e9800998ecf8427e_800x800.jpg"
+    },
+    {
+        "name":"wedang jahe",
+        "price":5000,
+        "restaurantId":4,
+        "picture":"https://1.bp.blogspot.com/-BJue7fBuSN4/Xzkutj9iHcI/AAAAAAAB1DI/pW3sP1qRr8M40fHmFzgM5vfzLa-y9wjdQCLcBGAsYHQ/s466/wedang-jahe.png"
+    },
+    {
+        "name":"kepiting rebus",
+        "price":35000,
+        "restaurantId":5,
+        "picture":"https://cdn0-production-images-kly.akamaized.net/6VN38OV7w5inOhCte2JPWnUjPmA=/640x360/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/2355329/original/078016000_1536562953-resep-masakan-sehari-hari.jpg"
+    },
+    {
+        "name":"ikan gurame bakar",
+        "price":40000,
+        "restaurantId":5,
+        "picture":"https://img-global.cpcdn.com/recipes/4d72737551e755e9/751x532cq70/gurame-bakar-foto-resep-utama.jpg"
+    },
+    {
+        "name":"cumi bakar",
+        "price":20000,
+        "restaurantId":5,
+        "picture":"https://img-global.cpcdn.com/recipes/729034ed266dafe6/1200x630cq70/photo.jpg"
+    },
+    {
+        "name":"lobster asam manis",
+        "price":30000,
+        "restaurantId":5,
+        "picture":"https://img-global.cpcdn.com/recipes/7509ac1dda0c5526/751x532cq70/lobster-asam-manis-foto-resep-utama.jpg"
     }
-    
 ]
