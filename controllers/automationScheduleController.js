@@ -1,6 +1,16 @@
 const {AutomationSchedule, Restaurant, Foods} = require('../models')
 
 module.exports = class AutomationScheduleController {
+    static async getForAutomation() {
+        try {
+            const schedules = await AutomationSchedule.findAll({where: {isActive: true}})
+            return schedules.map(schedule => {
+                return {id: schedule.id, time: schedule.time}
+            })
+        } catch(err) {
+            console.log(err)
+        }
+    }
     static async getAllSchedules(req, res, next) {
         try {
             const userId = /*req.user.id*/ 1
@@ -58,6 +68,14 @@ module.exports = class AutomationScheduleController {
             res.status(201).json({schedule: newSchedule})
         } catch(err) {
             next(err)
+        }
+    }
+    static async updateRealtimeStatus({id, isActive}) {
+        try {
+            console.log(id)
+            return await AutomationSchedule.update({isActive}, {where: {id}})
+        } catch(err) {
+            console.log(err)
         }
     }
     static async updateStatus(req, res, next) {
