@@ -3,7 +3,7 @@ const PORT = 3000
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const {AutomationSchedule} = require('../models')
-
+let num = 0
 async function createOrder(socket, order) {
   const createdOrder = await OrderController.createOrder(order, socket.id)
   socket.broadcast.emit("incoming order", createdOrder)
@@ -13,7 +13,7 @@ const OrderController = require('../controllers/OrderController')
 
 
 io.on('connection', async socket => {
-  // console.log('a driver is connected', socket.id)
+  console.log('a driver is connected', socket.id)
   // let automationSchedules;
   // socket.on('set automation', async ({id, isActive}) => {
   //   // console.log('dia kesini gitu?', id, isActive)
@@ -22,22 +22,29 @@ io.on('connection', async socket => {
   // })
 
   setInterval(async () => {
+    console.log('INI ADALAH MULAI COUNTERNYA')
     const timeNow = new Date()
     const [hour, minute] = timeNow.toTimeString().slice(0, 5).split(':')
     let automationSchedules = await AutomationScheduleController.getForAutomation()
     const schedules = automationSchedules.sort((a, b) => a.time-b.time)
     for(const {id, time} of schedules) {
       const [hourInSchedule, minuteInSchedule] = time.split(".")
-      console.log(automationSchedules)
-      console.log(hourInSchedule, minuteInSchedule, hour, minute)
-      if(hourInSchedule === hour && minuteInSchedule === minute) {
+      // console.log(automationSchedules)
+      console.log(hourInSchedule, minuteInSchedule, hour, minute, num)
+      console.log(hourInSchedule === hour, minuteInSchedule === minute)
+      if(hourInSchedule === hour && minuteInSchedule === minute && num < 1) {
+        num++
         console.log(hour, minute, '<<<<< yeay jalan')
         const {userId, foodId, restaurantId} = await AutomationSchedule.findByPk(id)
+        /**
+         * 
+         */
         const createdOrder = await OrderController.createOrder({status: 'pending', restaurantId, foodId, userId})
+        console.log('order created', createdOrder)
         socket.broadcast.emit("incoming order", createdOrder)
       }
     }
-  }, 60000)
+  }, 5000)
 
   socket.on('create order', async order => {
     await createOrder(socket, order)
