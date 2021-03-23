@@ -26,7 +26,7 @@ io.on('connection', async socket => {
       // console.log(hourInSchedule, minuteInSchedule, hour, minute)
       if(hourInSchedule === hour && minuteInSchedule === minute) {
         // console.log(hour, minute, '<<<<< yeay jalan')
-
+        //laptop gue gabisa dual emulator :((
         /**
          * 1. dapetin data user(buat dapetin saldo) dan food(buat dapetin harga makanan) dari
          * automationScheduleController
