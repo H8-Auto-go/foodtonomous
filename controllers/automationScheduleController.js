@@ -3,7 +3,7 @@ const {AutomationSchedule, Restaurant, Foods} = require('../models')
 module.exports = class AutomationScheduleController {
     static async getAllSchedules(req, res, next) {
         try {
-            const userId = /*req.user.id*/ 1
+            const userId = req.user.id
             const schedules = await AutomationSchedule.findAll({include: [Restaurant, Foods],where: {userId}})
             const editedSchedules = schedules.map(({id, time, isActive, Restaurant: resto, Food: food}) => {
                 return {
@@ -53,7 +53,7 @@ module.exports = class AutomationScheduleController {
     static async addSchedule(req, res, next) {
         try {
             const { time, isActive, restaurantId, foodId} = req.body
-            const userId = /*req.user.id*/ 1
+            const userId = req.user.id
             const newSchedule = await AutomationSchedule.create({time, isActive, restaurantId, foodId, userId}, {returning: true})
             res.status(201).json({schedule: newSchedule})
         } catch(err) {
@@ -63,7 +63,7 @@ module.exports = class AutomationScheduleController {
     static async updateStatus(req, res, next) {
         try {
             const scheduleId = Number(req.params.id)
-            const isActive = req.body.isActive === 'true' //masih harus diganti, ini buat percobaan doang
+            const isActive = req.body.isActive || 'true' //masih harus diganti, ini buat percobaan doang
             const updatedSchedule = await AutomationSchedule.update({isActive}, {where: {id:scheduleId}})
             res.status(200).json({schedule: updatedSchedule})
         } catch(err) {

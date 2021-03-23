@@ -19,3 +19,4 @@ route.use('/favoriteFoods', favoriteFoodRoutes)
 route.use('/automationSchedules', automationScheduleRoutes)
 
 module.exports = route
+ 

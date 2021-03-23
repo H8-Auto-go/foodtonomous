@@ -6,10 +6,13 @@ class DriverController {
         try {
             const { email, password, location } = req.body
             // console.log(location);
+            console.log(req.body);
             const driver = await Driver.findOne({ where: { email } })
-            // if (!driver) throw { name: 'customError', code: 401, msg: 'Invalid email or password' }
+            console.log(driver);
+            if (!driver) throw { name: 'customError', code: 401, msg: 'Invalid email or password' }
             const compare = await comparePassword(password, driver.password)
-            // if (!compare) throw { name: 'customError', code: 401, msg: 'Invalid email or password' }
+            console.log(compare);
+            if (!compare) throw { name: 'customError', code: 401, msg: 'Invalid email or password' }
             
             const updatedLocationDriver = await Driver.update({location: JSON.stringify(location)}, {where:{email}})
             const access_token = generateToken({

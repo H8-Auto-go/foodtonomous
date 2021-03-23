@@ -1,5 +1,4 @@
 module.exports = (err, req, res, next) => {
-    console.log(err.name);
     if(err.name === 'SequelizeUniqueConstraintError'){
         return res.status(400).json({error: 'Email already exist'})
      } else if(err.name == "SequelizeValidationError"){
@@ -10,7 +9,7 @@ module.exports = (err, req, res, next) => {
      }else if(err.name == 'JsonWebTokenError'){
         return res.status(401).json({err: 'Invalid token'}) 
      }else{
-        console.log(err);
+        console.log(err, '========');
         return res.status(500).json({error: 'Internal Server Error'})
      }
 }

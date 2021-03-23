@@ -6,6 +6,7 @@ class UserController {
         try {
             console.log(req.body);
             if (req.body.role === 'user'){
+                const user = await User.findOne({where:{email:req.body.email}})
                 const result = await User.create(req.body)
                 res.status(201).json({
                     msg: 'sukses register',
@@ -47,6 +48,7 @@ class UserController {
     static async login(req, res, next) {
         try {
             const { email, password, location } = req.body
+            console.log(req.body)
             const user = await User.findOne({ where: { email } })
             if (!user) throw { name: 'customError', code: 401, msg: 'Invalid email or password' }
             const compare = await comparePassword(password, user.password)

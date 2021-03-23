@@ -4,7 +4,7 @@ const {FavoriteFood, Restaurant, Foods, User} = require('../models')
 module.exports = class FavoriteFoodController {
     static async getAllFavoriteFoods(req, res, next) {
         try {
-            const userId = /*req.user*/ 1
+            const userId = req.user.id
             const favoriteFoods = await FavoriteFood.findAll({where:{userId}, include: [Restaurant, Foods]})
             res.status(200).json(favoriteFoods.map(({id, Restaurant: resto, Food: food}) => {
                 return {
@@ -58,7 +58,7 @@ module.exports = class FavoriteFoodController {
     static async addFavoriteFood(req, res, next) {
         try {
             const {restaurantId, foodId} = req.body
-            const userId = /*req.user.id*/1 //for testing purpose
+            const userId = req.user.id //for testing purpose
             const newFavoriteFood = await FavoriteFood.create({userId, restaurantId, foodId})
             res.status(201).json({favoriteFood: newFavoriteFood})
         } catch(err) {

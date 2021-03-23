@@ -30,7 +30,7 @@ class OrderController {
 
     static async getOrder(req, res, next) {
         try {
-            const id = Number(req.params.id) || 1
+            const id = Number(req.params.id) 
             const {status, socketUserId, socketDriverId, User: user, Driver: driver, Restaurant: resto, Food: food} = await Order.findOne({where: {id}, include: [User, Driver, Restaurant, Foods]})
             res.status(200).json({
                 id, status,
@@ -94,6 +94,16 @@ class OrderController {
             const orderId = +req.params.id
             await Order.destroy({where: {id:orderId}})
             res.status(200).json({message: 'Success delete order'})
+        } catch (err) {
+            next(err)
+        }
+    }
+
+    static async getAllhistoryUser(req, res, next) {
+        try {
+            const id = req.user.id
+            const history = await Order.findOne({where: {id, status:'done'}, include: [User, Driver, Restaurant, Foods]})
+            res.status(200).json(history)
         } catch (err) {
             next(err)
         }

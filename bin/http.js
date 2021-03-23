@@ -4,13 +4,13 @@ const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const doSomething = require('../cronJob/cron')
 
+const OrderController = require('../controllers/orderController')
+const DriverController = require('../controllers/driverController')
 
 async function createOrder(socket, order) {
   const createdOrder = await OrderController.createOrder(order, socket.id)
   socket.broadcast.emit("incoming order", createdOrder)
 }
-const OrderController = require('../controllers/OrderController')
-const DriverController = require('../controllers/driverController')
 io.on('connection', socket => {
   console.log('a driver is connected', socket.id)
   doSomething(async (newOrder) => {

@@ -1,5 +1,5 @@
 const RestaurantController = require('../controllers/restaurantController')
-const history = require('./historyRoute')
+const auth = require('../midlewares/auth')
 const route = require('express').Router()
 
 route.get('/', RestaurantController.getAllRestaurant)
