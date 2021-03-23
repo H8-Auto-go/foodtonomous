@@ -89,6 +89,20 @@ describe('order routes', () => {
                 })
         })
     })
+    describe('server error', () => {
+        test('should ', (done) => {
+            request(app)
+            .get(`/orders/1`)
+            .set('access_token', token)
+                .end((err, res) => {
+                    if (err) done(err)
+
+                    expect(res.status).toBe(500)
+                    done()
+                })
+        })
+        
+    })
     describe('get all history user', () => {
         test('should ', (done) => {
             request(app)

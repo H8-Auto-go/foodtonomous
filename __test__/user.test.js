@@ -138,6 +138,20 @@ describe('user route', () => {
                 })
             })
         })
+        describe('invalid token', () => {
+            test('401', (done) => {
+                request(app)
+                .get('/users')
+                .set('access_token', '1')
+                .end((err, res) => {
+                    if(err) done(err)
+                    console.log(res.body)
+                    expect(res.status).toBe(401)
+                    done()
+                })
+            })
+            
+        })
     })
 })
 
