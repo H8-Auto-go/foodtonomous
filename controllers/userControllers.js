@@ -2,6 +2,18 @@ const { User, Driver } = require('../models')
 const { comparePassword } = require('../helpers/bcrypt');
 const {generateToken, decodeToken} = require('../helpers/jwt')
 class UserController {
+
+    static async updateSaldo({userId, driverId, price}) {
+        try {
+            const [user, driver] = await Promise.all([
+              User.update({saldo: price},{where:{id: userId}}),
+              Driver.update({saldo:price},{where: {id:driverId}})
+            ])
+            return user && driver
+        } catch(err) {
+            console.log(err)
+        }
+    }
     static async register(req, res, next) {
         try {
             console.log(req.body);

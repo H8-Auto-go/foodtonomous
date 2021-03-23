@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       AutomationSchedule.belongsTo(models.Restaurant, {foreignKey: 'restaurantId'})
       AutomationSchedule.belongsTo(models.Foods, {foreignKey: 'foodId'})
+      AutomationSchedule.belongsTo(models.User, {foreignKey: 'userId'})
     }
   };
   AutomationSchedule.init({

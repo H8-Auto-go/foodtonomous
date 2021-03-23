@@ -62,6 +62,40 @@ class OrderController {
             console.log(err)
         }
     }
+    // static async getOrderDone(orderId) {
+    //     const {status, socketUserId, socketDriverId, User: user, Driver: driver, Restaurant: resto, Food: food} = await Order.findOne({where: {id:orderId}, include: [User, Driver, Restaurant, Foods]})
+    //     return {
+    //         id, status,
+    //         socketUserId,
+    //         socketDriverId,
+    //         user: {
+    //             id: user.id,
+    //             name: user.name,
+    //             saldo: user.saldo,
+    //             avatar: user.avatar,
+    //             location: JSON.parse(user.location)
+    //         },
+    //         driver: {
+    //             id: driver.id,
+    //             name: driver.name,
+    //             saldo: Number(driver.saldo),
+    //             avatar: driver.avatar,
+    //             location: JSON.parse(driver.location)
+    //         },
+    //         restaurant: {
+    //             id: resto.id,
+    //             name: resto.name,
+    //             picture: resto.picture,
+    //             location: JSON.parse(resto.location)
+    //         },
+    //         food: {
+    //             id: food.id,
+    //             name: food.name,
+    //             price: food.price,
+    //             picture: food.picture
+    //         }
+    //     }
+    // }
 
     static async getOrder(req, res, next) {
         try {
@@ -105,7 +139,40 @@ class OrderController {
 
     static async updateStatus({status, id}) {
         try {
-            return await Order.update({status}, {where: {id}})
+            await Order.update({status}, {where: {id}})
+            const {status, socketUserId, socketDriverId, User: user, Driver: driver, Restaurant: resto, Food: food} =
+              await Order.findOne({where: {id:orderId}, include: [User, Driver, Restaurant, Foods]})
+            return {
+                id, status,
+                socketUserId,
+                socketDriverId,
+                user: {
+                    id: user.id,
+                    name: user.name,
+                    saldo: user.saldo,
+                    avatar: user.avatar,
+                    location: JSON.parse(user.location)
+                },
+                driver: {
+                    id: driver.id,
+                    name: driver.name,
+                    saldo: Number(driver.saldo),
+                    avatar: driver.avatar,
+                    location: JSON.parse(driver.location)
+                },
+                restaurant: {
+                    id: resto.id,
+                    name: resto.name,
+                    picture: resto.picture,
+                    location: JSON.parse(resto.location)
+                },
+                food: {
+                    id: food.id,
+                    name: food.name,
+                    price: food.price,
+                    picture: food.picture
+                }
+            }
         } catch (err) {
             console.log(err)
         }

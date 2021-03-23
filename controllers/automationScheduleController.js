@@ -1,11 +1,17 @@
-const {AutomationSchedule, Restaurant, Foods} = require('../models')
+const {AutomationSchedule, Restaurant, User, Foods} = require('../models')
 
 module.exports = class AutomationScheduleController {
     static async getForAutomation() {
         try {
-            const schedules = await AutomationSchedule.findAll({where: {isActive: true}})
+            const schedules = await AutomationSchedule.findAll({where: {isActive: true}, include: [User, Foods, Restaurant]})
             return schedules.map(schedule => {
-                return {id: schedule.id, time: schedule.time}
+                return {id: schedule.id,
+                    time: schedule.time,
+                    userId: schedule.userId,
+                    price: schedule.Food.price,
+                    food: schedule.Food,
+                    restaurant: schedule.Restaurant
+                }
             })
         } catch(err) {
             console.log(err)

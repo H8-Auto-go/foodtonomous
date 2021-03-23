@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Order, {foreignKey:'userId'})
       User.hasMany(models.Order, {foreignKey: 'driverId'})
       User.hasMany(models.FavoriteFood, {foreignKey:'userId'})
+      User.hasMany(models.AutomationSchedule, {foreignKey: 'userId'})
     }
   };
   User.init({
