@@ -108,6 +108,14 @@ class OrderController {
         }
     }
 
+    static async updateTotalPrice({totalPrice, id}) {
+        try {
+            return await Order.update({totalPrice}, {where: {id}})
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
     static async updateStatus({status, id}) {
         try {
             await Order.update({status}, {where: {id}})

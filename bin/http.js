@@ -53,21 +53,24 @@ io.on('connection', async socket => {
   socket.on('order confirmation', async ({id, driverId}) => {
     // console.log(socket.id, driverId, '<<< socketDriverId')
     const updatedOrder = await OrderController.addOrderDriver({id, driverId}, socket.id)
-    socket.broadcast.emit("on going order", updatedOrder)
+    io.broadcast.emit("on going order", updatedOrder)
   })
   socket.on('order done', async ({status, id, distance}) => {
     try {
       console.log(status, id, distance)
       const {
+        quantity,
         user: {id: userId, saldo: userSaldo}, 
         driver: {id: driverId, saldo: driverSaldo}, 
         food: { id: foodId, price: foodPrice }
       } = await OrderController.updateStatus({status, id})
-      const orderPrice = (foodPrice + (distance*4000))
+      const orderPrice = (foodPrice + (distance*2000))
       const updatedUserSaldo = userSaldo - orderPrice
       const updatedDriverSaldo = driverSaldo + orderPrice
       const bill = {updatedUserSaldo, updatedDriverSaldo, userId, driverId}
       const [user, driver] = await UserController.updateSaldo(bill)
+      const totalPrice = (quantity*foodPrice)+(distance*2000)
+      const updatedTotalPrice = await OrderController.updateTotalPrice({totalPrice, id})
       console.log(user, driver, '<<<<<< ini semua data harusnya ada')
       socket.broadcast.emit('giveARating')
     } catch(err) {

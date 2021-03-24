@@ -26,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     restaurantId: DataTypes.INTEGER,
     foodId: DataTypes.INTEGER,
     quantity: DataTypes.INTEGER,
+    totalPrice: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Order',

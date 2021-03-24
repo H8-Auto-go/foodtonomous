@@ -25,6 +25,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'AutomationSchedule',
+    hooks: {
+      beforeCreate: schedule => {
+        schedule.quantity = schedule.quantity || 1
+      }
+    }
   });
   return AutomationSchedule;
 };
