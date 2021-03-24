@@ -42,7 +42,7 @@ io.on('connection', async socket => {
          */
         const createdOrder = await OrderController.createOrder({status: 'pending', restaurantId, foodId, userId})
         // console.log('order created', createdOrder)
-        socket.broadcast.emit("incoming order", createdOrder)
+        io.emit("incoming order", createdOrder)
       }
     }
   }, 5000)
@@ -53,7 +53,7 @@ io.on('connection', async socket => {
   socket.on('order confirmation', async ({id, driverId}) => {
     // console.log(socket.id, driverId, '<<< socketDriverId')
     const updatedOrder = await OrderController.addOrderDriver({id, driverId}, socket.id)
-    io.broadcast.emit("on going order", updatedOrder)
+    io.emit("on going order", updatedOrder)
   })
   socket.on('order done', async ({status, id, distance}) => {
     try {

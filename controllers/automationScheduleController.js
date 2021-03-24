@@ -22,7 +22,6 @@ module.exports = class AutomationScheduleController {
             } else {
                  userId = 1
             }
-            console.log(userId);
             const schedules = await AutomationSchedule.findAll({include: [Restaurant, Foods],where: {userId}, order: [
                 ['id', 'DESC'],
             ]})
@@ -83,7 +82,6 @@ module.exports = class AutomationScheduleController {
     }
     static async updateRealtimeStatus({id, isActive}) {
         try {
-            console.log(id)
             return await AutomationSchedule.update({isActive}, {where: {id}})
         } catch(err) {
             console.log(err)
@@ -91,7 +89,6 @@ module.exports = class AutomationScheduleController {
     }
     static async updateStatus(req, res, next) {
         try {
-            console.log(req.params.id, req.body)
             const scheduleId = Number(req.params.id)
             const isActive = req.body.isActive //masih harus diganti, ini buat percobaan doang
             const updatedSchedule = await AutomationSchedule.update({isActive}, {where: {id:scheduleId}})
@@ -114,6 +111,7 @@ module.exports = class AutomationScheduleController {
         try {
             const id = +req.params.id
             const {quantity} = req.body
+            console.log(quantity, '<<<< ini di controller')
             const updateQty = await AutomationSchedule.update({quantity}, {where:{id}})
             res.status(200).json(updateQty)
         } catch (err) {
