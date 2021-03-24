@@ -8,11 +8,36 @@
         }
     },
     {
-        "name":"sabana",
-        "picture":"https://lh3.googleusercontent.com/proxy/zN02ZpIIpinIyyDV9isb4Z5w3FcXoy0aLwy-MFxafGioajhcKCHH9FzzFQeU_ndI97QMpFk_tt-2anwZnLxEEsITRxUCtaY0ukwX8t6-Hgm2D00Ebgv0sySstFKwQmdvxqPeVhj3HOtMOdSAd7yj553wNHNQtSdLnX0",
+        "name":"rm padang sederhana",
+        "picture":"https://i0.wp.com/www.klayapan.com/wp-content/uploads/2018/04/1-2.-restoran-sederhana-sumber-tripAdvisor.jpg",
         "location":{
-            "longitude":107.6259332,
-            "latitude":-6.9407425
+            "longitude":106.810322,
+            "latitude":-6.258532
+        }
+    },
+    {
+        "name":"bubur ayam",
+        "picture":"https://www.pegipegi.com/travel/wp-content/uploads/2017/02/bubur-ayam-senopati.jpg",
+        "location":{
+            "longitude":106.800823,
+            "latitude":-6.255834
+        }
+    },
+    {
+        "name":"angkringan",
+        "picture":"https://imgcdn.rri.co.id/__srct/b763d32e20ec5d473fd182b5c78d0964/969557/img_20210130_180345.jpg?v=1.0.3",
+        "location":{
+            "longitude":106.796700,
+            "latitude":-6.274689
+        }
+    },
+    {
+        "name":"rumah makan seafood '99'",
+        "picture":"https://ik.imagekit.io/tvlk/cul-asset/guys1L+Yyer9kzI3sp-pb0CG1j2bhflZGFUZOoIf1YOBAm37kEUOKR41ieUZm7ZJ/tvlk-prod-cul-assets/culinary/asset/REST_IMG-1012x720-FIT_AND_TRIM-530c959ecf9da6b9d4582aa018962ad3.jpeg?tr=q-40,c-at_max,w-1080,h-1920&_src=imagekit",
+        "location":{
+            "longitude":106.830420,
+            "latitude":-6.257317
         }
     }
+    
 ]

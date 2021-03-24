@@ -9,11 +9,11 @@ async function createOrder(socket, order) {
   socket.broadcast.emit("incoming order", createdOrder)
 }
 const AutomationScheduleController = require('../controllers/automationScheduleController')
-const OrderController = require('../controllers/OrderController')
-
+const OrderController = require('../controllers/orderController')
+const UserController = require('../controllers/userControllers')
 
 io.on('connection', async socket => {
-  console.log('a driver is connected', socket.id)
+  // console.log('a driver is connected', socket.id)
   // let automationSchedules;
   // socket.on('set automation', async ({id, isActive}) => {
   //   // console.log('dia kesini gitu?', id, isActive)
@@ -22,7 +22,7 @@ io.on('connection', async socket => {
   // })
 
   setInterval(async () => {
-    console.log('INI ADALAH MULAI COUNTERNYA')
+    // console.log('INI ADALAH MULAI COUNTERNYA')
     const timeNow = new Date()
     const [hour, minute] = timeNow.toTimeString().slice(0, 5).split(':')
     let automationSchedules = await AutomationScheduleController.getForAutomation()
@@ -30,17 +30,18 @@ io.on('connection', async socket => {
     for(const {id, time} of schedules) {
       const [hourInSchedule, minuteInSchedule] = time.split(".")
       // console.log(automationSchedules)
-      console.log(hourInSchedule, minuteInSchedule, hour, minute, num)
-      console.log(hourInSchedule === hour, minuteInSchedule === minute)
+      // console.log(hourInSchedule, minuteInSchedule, hour, minute, num)
+      console.log(hourInSchedule, hour, minuteInSchedule, minute, num)
       if(hourInSchedule === hour && minuteInSchedule === minute && num < 1) {
+        console.log(hourInSchedule === hour, minuteInSchedule === minute, '<<<< after masuknya')
         num++
-        console.log(hour, minute, '<<<<< yeay jalan')
+        // console.log(hour, minute, '<<<<< yeay jalan')
         const {userId, foodId, restaurantId} = await AutomationSchedule.findByPk(id)
         /**
          * 
          */
         const createdOrder = await OrderController.createOrder({status: 'pending', restaurantId, foodId, userId})
-        console.log('order created', createdOrder)
+        // console.log('order created', createdOrder)
         socket.broadcast.emit("incoming order", createdOrder)
       }
     }
@@ -50,13 +51,29 @@ io.on('connection', async socket => {
     await createOrder(socket, order)
   })
   socket.on('order confirmation', async ({id, driverId}) => {
-    console.log(socket.id, driverId, '<<< socketDriverId')
+    // console.log(socket.id, driverId, '<<< socketDriverId')
     const updatedOrder = await OrderController.addOrderDriver({id, driverId}, socket.id)
     socket.broadcast.emit("on going order", updatedOrder)
   })
-  socket.on('order done', async ({status, id}) => {
-    await OrderController.updateStatus({status, id})
-    socket.broadcast.emit('give a rating')
+  socket.on('order done', async ({status, id, distance}) => {
+    try {
+      console.log(status, id, distance)
+      const {
+        user: {id: userId, saldo: userSaldo}, 
+        driver: {id: driverId, saldo: driverSaldo}, 
+        food: { id: foodId, price: foodPrice }
+      } = await OrderController.updateStatus({status, id})
+      const orderPrice = (foodPrice + (distance*4000))
+      const updatedUserSaldo = userSaldo - orderPrice
+      const updatedDriverSaldo = driverSaldo + orderPrice
+      const bill = {updatedUserSaldo, updatedDriverSaldo, userId, driverId}
+      const [user, driver] = await UserController.updateSaldo(bill)
+      console.log(user, driver, '<<<<<< ini semua data harusnya ada')
+      socket.broadcast.emit('giveARating')
+    } catch(err) {
+      console.log(err)
+    }
+    // socket.broadcast.emit('refetch saldo')
   })
 });
 

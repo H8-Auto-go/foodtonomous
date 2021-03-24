@@ -2,9 +2,21 @@ const { User, Driver } = require('../models')
 const { comparePassword } = require('../helpers/bcrypt');
 const {generateToken, decodeToken} = require('../helpers/jwt')
 class UserController {
+    static async updateSaldo({userId, driverId, updatedUserSaldo, updatedDriverSaldo}) {
+        try {
+            const [user, driver] = await Promise.all([
+              User.update({saldo:updatedUserSaldo},{where:{id: userId}}),
+              Driver.update({saldo:updatedDriverSaldo},{where: {id:driverId}})
+            ])
+            return [user, driver]
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
     static async register(req, res, next) {
         try {
-            console.log(req.body);
+            // console.log(req.body);
             if (req.body.role === 'user'){
                 const result = await User.create(req.body)
                 res.status(201).json({
@@ -27,19 +39,45 @@ class UserController {
         }
     }
 
+    static async getUsers(req, res, next) {
+        try {
+            const data = decodeToken(req.headers.access_token)
+            // console.log('dari userController',data);
+            const users = await Promise.all([
+                await User.findByPk(data.id),
+                await Driver.findByPk(data.id)
+            ])
+        
+        
+            const parsedUser = users.map(({id, name, email, saldo, location, avatar, role}) => {
+                return {
+                    id, name, email, saldo, 
+                    location: JSON.parse(location),
+                    avatar, role
+                }
+            })
+            console.log(parsedUser)
+            res.status(200).json(parsedUser)
+        } catch(err) {
+            next(err)
+        }
+    }
+
     static async getUser(req, res, next) {
         try {
             const data = decodeToken(req.headers.access_token)
+            console.log('dari userController',data);
             const {id, name, email, saldo, location, avatar, role} = data.role === 'user'
                 ? await User.findByPk(data.id)
                 : await Driver.findByPk(data.id)
+            
+            console.log(name, role)
             res.status(200).json({
                 id, name, email, saldo,
                 avatar, role,
                 location: JSON.parse(location)
             })
         } catch(err) {
-            console.log(err)
             next(err)
         }
     }

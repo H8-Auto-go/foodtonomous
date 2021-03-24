@@ -105,7 +105,40 @@ class OrderController {
 
     static async updateStatus({status, id}) {
         try {
-            return await Order.update({status}, {where: {id}})
+            await Order.update({status}, {where: {id}})
+            const {socketUserId, socketDriverId, User: user, Driver: driver, Restaurant: resto, Food: food} =
+              await Order.findOne({where: {id}, include: [User, Driver, Restaurant, Foods]})
+            return {
+                id, status,
+                socketUserId,
+                socketDriverId,
+                user: {
+                    id: user.id,
+                    name: user.name,
+                    saldo: user.saldo,
+                    avatar: user.avatar,
+                    location: JSON.parse(user.location)
+                },
+                driver: {
+                    id: driver.id,
+                    name: driver.name,
+                    saldo: Number(driver.saldo),
+                    avatar: driver.avatar,
+                    location: JSON.parse(driver.location)
+                },
+                restaurant: {
+                    id: resto.id,
+                    name: resto.name,
+                    picture: resto.picture,
+                    location: JSON.parse(resto.location)
+                },
+                food: {
+                    id: food.id,
+                    name: food.name,
+                    price: food.price,
+                    picture: food.picture
+                }
+            }
         } catch (err) {
             console.log(err)
         }
@@ -129,6 +162,15 @@ class OrderController {
             const orderId = +req.params.id
             await Order.destroy({where: {id:orderId}})
             res.status(200).json({message: 'Success delete order'})
+        } catch (err) {
+            next(err)
+        }
+    }
+
+    static async getAllhistoryUser(req, res, next) {
+        try {
+            const history = await Order.findAll({where: { status:'done'}, include: [User, Driver, Restaurant, Foods]})
+            res.status(200).json(history)
         } catch (err) {
             next(err)
         }

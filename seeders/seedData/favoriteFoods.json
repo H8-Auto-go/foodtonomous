@@ -9,4 +9,34 @@
         "restaurantId": 2,
         "foodId": 4
     }
+    ,
+    {
+        "userId": 1,
+        "restaurantId": 2,
+        "foodId": 3
+    }
+    ,
+    {
+        "userId": 1,
+        "restaurantId": 2,
+        "foodId": 5
+    }
+    ,
+    {
+        "userId": 1,
+        "restaurantId": 3,
+        "foodId": 6
+    }
+    ,
+    {
+        "userId": 1,
+        "restaurantId": 4,
+        "foodId": 8
+    }
+    ,
+    {
+        "userId": 1,
+        "restaurantId": 5,
+        "foodId": 12
+    }
 ]

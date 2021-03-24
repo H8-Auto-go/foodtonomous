@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
   };
   Restaurant.init({
     name: DataTypes.STRING,
-    picture: DataTypes.STRING,
+    picture: DataTypes.TEXT,
     location: DataTypes.STRING
   }, {
     sequelize,

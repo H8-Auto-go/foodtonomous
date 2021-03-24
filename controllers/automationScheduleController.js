@@ -14,7 +14,9 @@ module.exports = class AutomationScheduleController {
     static async getAllSchedules(req, res, next) {
         try {
             const userId = /*req.user.id*/ 1
-            const schedules = await AutomationSchedule.findAll({include: [Restaurant, Foods],where: {userId}})
+            const schedules = await AutomationSchedule.findAll({include: [Restaurant, Foods],where: {userId}, order: [
+                ['id', 'DESC'],
+            ]})
             const editedSchedules = schedules.map(({id, time, isActive, Restaurant: resto, Food: food}) => {
                 return {
                     id, time, isActive,
