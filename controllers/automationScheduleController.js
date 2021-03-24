@@ -26,7 +26,7 @@ module.exports = class AutomationScheduleController {
             const schedules = await AutomationSchedule.findAll({include: [Restaurant, Foods],where: {userId}, order: [
                 ['id', 'DESC'],
             ]})
-            const editedSchedules = schedules.map(({id, time, isActive, Restaurant: resto, Food: food}) => {
+            const editedSchedules = schedules.map(({id, time, isActive, Restaurant: resto, Food: food,quantity}) => {
                 return {
                     id, time, isActive,
                     restaurant: {
@@ -40,7 +40,7 @@ module.exports = class AutomationScheduleController {
                         name: food.name,
                         price: food.price,
                         picture: food.picture
-                    }
+                    },quantity
                 }
             })
             res.status(200).json({automationSchedules: editedSchedules})
@@ -106,6 +106,17 @@ module.exports = class AutomationScheduleController {
             await AutomationSchedule.destroy({where: {id:scheduleId}})
             res.status(200).json({message: 'automation schedule deleted'})
         } catch(err) {
+            next(err)
+        }
+    }
+
+    static async updateQuantity(req, res, next) { 
+        try {
+            const id = +req.params.id
+            const {quantity} = req.body
+            const updateQty = await AutomationSchedule.update({quantity}, {where:{id}})
+            res.status(200).json(updateQty)
+        } catch (err) {
             next(err)
         }
     }

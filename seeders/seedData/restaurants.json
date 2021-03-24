@@ -1,6 +1,6 @@
 [
     {
-        "name":"pecel lele barokah",
+        "name":"Pecel Lele Barokah",
         "picture":"https://awsimages.detik.net.id/community/media/visual/2018/02/07/de109c12-a39d-40d0-a3d0-ad3a5b2ca1d7_169.jpeg?w=700&q=90",
         "location":{
             "longitude":107.6259332,
@@ -8,7 +8,7 @@
         }
     },
     {
-        "name":"rm padang sederhana",
+        "name":"RM Makan Padang",
         "picture":"https://i0.wp.com/www.klayapan.com/wp-content/uploads/2018/04/1-2.-restoran-sederhana-sumber-tripAdvisor.jpg",
         "location":{
             "longitude":106.810322,
@@ -16,7 +16,7 @@
         }
     },
     {
-        "name":"bubur ayam",
+        "name":"Bubur Ayam",
         "picture":"https://www.pegipegi.com/travel/wp-content/uploads/2017/02/bubur-ayam-senopati.jpg",
         "location":{
             "longitude":106.800823,
@@ -24,7 +24,7 @@
         }
     },
     {
-        "name":"angkringan",
+        "name":"Angkringan",
         "picture":"https://imgcdn.rri.co.id/__srct/b763d32e20ec5d473fd182b5c78d0964/969557/img_20210130_180345.jpg?v=1.0.3",
         "location":{
             "longitude":106.796700,
@@ -32,7 +32,7 @@
         }
     },
     {
-        "name":"rumah makan seafood '99'",
+        "name":"Rumah Makan Seafood '99'",
         "picture":"https://ik.imagekit.io/tvlk/cul-asset/guys1L+Yyer9kzI3sp-pb0CG1j2bhflZGFUZOoIf1YOBAm37kEUOKR41ieUZm7ZJ/tvlk-prod-cul-assets/culinary/asset/REST_IMG-1012x720-FIT_AND_TRIM-530c959ecf9da6b9d4582aa018962ad3.jpeg?tr=q-40,c-at_max,w-1080,h-1920&_src=imagekit",
         "location":{
             "longitude":106.830420,

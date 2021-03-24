@@ -23,12 +23,14 @@ class OrderController {
                 socketDriverId,
                 driverId
             }, {where: {id}, returning: true})
-            const {status, socketUserId, User: user, Driver: driver, Restaurant: resto, Food: food} =
+            const {status, socketUserId, User: user, Driver: driver, Restaurant: resto, Food: food, quantity, totalPrice} =
               await Order.findByPk(id ,{include: [User, Driver, Restaurant, Foods]})
             return {
                 id, status,
                 socketUserId,
                 socketDriverId,
+                quantity,
+                totalPrice,
                 user: {
                     id: user.id,
                     name: user.name,
@@ -65,12 +67,15 @@ class OrderController {
 
     static async getOrder(req, res, next) {
         try {
+            console.log(req.body, req.headers, req.params, '<<<<< testing')
             const id = Number(req.params.id) || 1
-            const {status, socketUserId, socketDriverId, User: user, Driver: driver, Restaurant: resto, Food: food} = await Order.findOne({where: {id}, include: [User, Driver, Restaurant, Foods]})
+            const {status, socketUserId, socketDriverId, User: user, Driver: driver, Restaurant: resto, Food: food, quantity, totalPrice} = await Order.findOne({where: {id}, include: [User, Driver, Restaurant, Foods]})
             res.status(200).json({
                 id, status,
                 socketUserId,
                 socketDriverId,
+                quantity,
+                totalPrice,
                 user: {
                     id: user.id,
                     name: user.name,
@@ -106,12 +111,14 @@ class OrderController {
     static async updateStatus({status, id}) {
         try {
             await Order.update({status}, {where: {id}})
-            const {socketUserId, socketDriverId, User: user, Driver: driver, Restaurant: resto, Food: food} =
+            const {socketUserId, socketDriverId, User: user, Driver: driver, Restaurant: resto, Food: food, quantity, totalPrice} =
               await Order.findOne({where: {id}, include: [User, Driver, Restaurant, Foods]})
             return {
                 id, status,
                 socketUserId,
                 socketDriverId,
+                quantity,
+                totalPrice,
                 user: {
                     id: user.id,
                     name: user.name,
@@ -169,8 +176,8 @@ class OrderController {
 
     static async getAllhistoryUser(req, res, next) {
         try {
-            const {id} = req.user ||1
-            const history = await Order.findAll({where: {id ,status:'done'}, include: [User, Driver, Restaurant, Foods]})
+            const id = req.user.id ||1
+            const history = await Order.findAll({where: {userId: id ,status:'done'}, include: [User, Driver, Restaurant, Foods]})
             res.status(200).json(history)
         } catch (err) {
             next(err)

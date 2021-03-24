@@ -7,6 +7,7 @@ const route = require('express').Router();
 // route.use(auth)
 route.get('/', AutomationScheduleController.getAllSchedules)
 route.post('/', AutomationScheduleController.addSchedule)
+route.put('/:id', AutomationScheduleController.updateQuantity)
 route.get('/:id', AutomationScheduleController.getOneSchedule)
 route.patch('/:id', AutomationScheduleController.updateStatus)
 route.delete('/:id', AutomationScheduleController.deleteSchedule)

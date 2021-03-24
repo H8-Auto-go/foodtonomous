@@ -17,6 +17,9 @@ module.exports = {
       socketDriverId: {
         type: Sequelize.STRING
       },
+      totalPrice: {
+        type: Sequelize.INTEGER,
+      },
       userId: {
         type: Sequelize.INTEGER,
         references: {

@@ -4,6 +4,8 @@
         "userId": 1,
         "driverId": 1,
         "restaurantId": 2,
-        "foodId": 4
+        "foodId": 4,
+        "quantity": 5,
+        "totalPrice": 500000
     }
 ]

@@ -1,12 +1,14 @@
 'use strict';
 const ordersData = require('./seedData/orders.json')
-const orders = ordersData.map(({status, userId, driverId, restaurantId, foodId}) => {
+const orders = ordersData.map(({status, userId, driverId, restaurantId, foodId, quantity, totalPrice}) => {
   return {
     status,
     userId,
     driverId,
     restaurantId,
     foodId,
+    quantity,
+    totalPrice,
     createdAt: new Date(),
     updatedAt: new Date()
   }
