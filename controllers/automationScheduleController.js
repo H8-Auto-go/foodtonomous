@@ -12,8 +12,17 @@ module.exports = class AutomationScheduleController {
         }
     }
     static async getAllSchedules(req, res, next) {
+        console.log('masuk sini');
         try {
-            const userId = /*req.user.id*/ 1
+            let userId = 0
+            console.log('masuk sini 2');
+            console.log(req.user)
+            if (req.user) {
+                 userId = +req.user.id
+            } else {
+                 userId = 1
+            }
+            console.log(userId);
             const schedules = await AutomationSchedule.findAll({include: [Restaurant, Foods],where: {userId}, order: [
                 ['id', 'DESC'],
             ]})
@@ -65,7 +74,7 @@ module.exports = class AutomationScheduleController {
     static async addSchedule(req, res, next) {
         try {
             const { time, isActive, restaurantId, foodId} = req.body
-            const userId = /*req.user.id*/ 1
+            const userId = req.user?.id || 1
             const newSchedule = await AutomationSchedule.create({time, isActive, restaurantId, foodId, userId}, {returning: true})
             res.status(201).json({schedule: newSchedule})
         } catch(err) {

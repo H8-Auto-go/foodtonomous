@@ -20,7 +20,8 @@ module.exports = (sequelize, DataTypes) => {
     restaurantId: DataTypes.INTEGER,
     foodId: DataTypes.INTEGER,
     isActive: DataTypes.BOOLEAN,
-    userId: DataTypes.INTEGER
+    userId: DataTypes.INTEGER,
+    quantity: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'AutomationSchedule',

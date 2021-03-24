@@ -169,7 +169,8 @@ class OrderController {
 
     static async getAllhistoryUser(req, res, next) {
         try {
-            const history = await Order.findAll({where: { status:'done'}, include: [User, Driver, Restaurant, Foods]})
+            const {id} = req.user ||1
+            const history = await Order.findAll({where: {id ,status:'done'}, include: [User, Driver, Restaurant, Foods]})
             res.status(200).json(history)
         } catch (err) {
             next(err)
