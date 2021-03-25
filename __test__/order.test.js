@@ -3,7 +3,7 @@ const app = require('../app');
 const { generateToken } = require('../helpers/jwt');
 const { sequelize, Driver, User, Order } = require("../models");
 const { queryInterface } = sequelize
-let id
+let idUserLain
 let token
 let tokenDrive
 let idUser
@@ -52,7 +52,7 @@ beforeAll(done => {
             })
             return Order.create({
 
-                "status": "pending",
+                "status": "done",
                 "userId": idUser,
                 "restaurantId": 2,
                 "driverId": 1,
@@ -79,7 +79,7 @@ describe('order routes', () => {
         test('should ', (done) => {
             console.log(idOrder, 'inihDI DALAM');
             request(app)
-                .get(`/orders/${idOrder}`)
+                .get(`/orders/history`)
                 .set('access_token', token)
                 .end((err, res) => {
                     if (err) done(err)
@@ -88,6 +88,18 @@ describe('order routes', () => {
                     done()
                 })
         })
+        // test('should ', (done) => {
+        //     console.log(idOrder, 'inihDI DALAM');
+        //     request(app)
+        //         .get(`/orders/history`)
+        //         .set('access_token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhbmdnYUB4YXZpZXIuY29tIiwibmFtZSI6IkFuZ2dhIE1hdWxhbmEiLCJyb2xlIjoidXNlciIsImlhdCI6MTYxNjUyMzYyM30.CxdRTKkcfhgsPtg0DD3v7_jJqLBR1pKYy07GZD87un8')
+        //         .end((err, res) => {
+        //             if (err) done(err)
+
+        //             expect(res.status).toBe(404)
+        //             done()
+        //         })
+        // })
     })
     describe('server error', () => {
         test('should ', (done) => {
@@ -104,16 +116,18 @@ describe('order routes', () => {
 
     })
     describe('get all history user', () => {
-        test('should ', (done) => {
-            request(app)
-                .get(`/orders/${idOrder}`)
-                .set('access_token', token)
-                .end((err, res) => {
-                    if (err) done(err)
-
-                    expect(res.status).toBe(200)
-                    done()
-                })
+        describe('success get history', () => {
+            test('should ', (done) => {
+                request(app)
+                    .get(`/orders/${idOrder}`)
+                    .set('access_token', token)
+                    .end((err, res) => {
+                        if (err) done(err)
+                        console.log(res.body, '============================');
+                        expect(res.status).toBe(200)
+                        done()
+                    })
+            })
         })
     })
 
@@ -135,16 +149,31 @@ describe('order routes', () => {
     })
 
     describe('delete order', () => {
-        test('should ', (done) => {
-            request(app)
-                .delete(`/orders/${idOrder}`)
-                .set('access_token', token)
-                .end((err, res) => {
-                    if (err) done(err)
-
-                    expect(res.status).toBe(200)
-                    done()
-                })
+        describe('success delete', () => {
+            test('should ', (done) => {
+                request(app)
+                    .delete(`/orders/${idOrder}`)
+                    .set('access_token', token)
+                    .end((err, res) => {
+                        if (err) done(err)
+    
+                        expect(res.status).toBe(200)
+                        done()
+                    })
+            })
+        })
+        describe('error delete not found', () => {
+            test('should ', (done) => {
+                request(app)
+                    .delete(`/orders/1`)
+                    .set('access_token', token)
+                    .end((err, res) => {
+                        if (err) done(err)
+    
+                        expect(res.status).toBe(404)
+                        done()
+                    })
+            })
         })
     })
 })

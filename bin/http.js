@@ -2,23 +2,22 @@ const app = require('../app')
 const PORT = 3000
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
-const doSomething = require('../cronJob/cron')
 
 const OrderController = require('../controllers/orderController')
 const DriverController = require('../controllers/driverController')
 
-async function createOrder(socket, order) {
-  const createdOrder = await OrderController.createOrder(order, socket.id)
-  socket.broadcast.emit("incoming order", createdOrder)
-}
+// async function createOrder(socket, order) {
+//   const createdOrder = await OrderController.createOrder(order, socket.id)
+//   socket.broadcast.emit("incoming order", createdOrder)
+// }
 io.on('connection', socket => {
   console.log('a driver is connected', socket.id)
-  doSomething(async (newOrder) => {
-    const createdOrder = await OrderController.createOrder(newOrder)
-    socket.broadcast.emit("incoming order", createdOrder)
-    // socket.join('driver')
-    // socket.to('driver').emit('incoming order', createdOrder)
-  })
+  // doSomething(async (newOrder) => {
+  //   const createdOrder = await OrderController.createOrder(newOrder)
+  //   socket.broadcast.emit("incoming order", createdOrder)
+  //   // socket.join('driver')
+  //   // socket.to('driver').emit('incoming order', createdOrder)
+  // })
   // setTimeout(() => {
   //   const dateNow = new Date()
   //   const automationTime = await OrderController()
@@ -50,15 +49,14 @@ io.on('connection', socket => {
   // })
   socket.on('create order', async order => {
     console.log(socket.id, '<<<<socketUserId')
-    await createOrder(socket, order)
   })
-  // socket.on('order confirmation', async ({id, driverId}) => {
-  //   console.log(socket.id, '<<< socketDriverId')
-  //   const updatedOrder = await OrderController.addOrderDriver({id, driverId}, socket.id)
-  //   //harusnya dari sini udah mulai private, jadi code ini ada kemungkinan nantinya di 
-  //   //find lagi
-  //   socket.broadcast.emit("on going order", updatedOrder)
-  // })
+  socket.on('order confirmation', async ({id, driverId}) => {
+    console.log(socket.id, '<<< socketDriverId')
+    const updatedOrder = await OrderController.addOrderDriver({id, driverId}, socket.id)
+    //harusnya dari sini udah mulai private, jadi code ini ada kemungkinan nantinya di 
+    //find lagi
+    socket.broadcast.emit("on going order", updatedOrder)
+  })
   // socket.on('order done', async ({status, id}) => {
   //   const updatedOrderStatus = await OrderController.updateStatus({status, id})
   //   socket.broadcast.emit('give a rating')

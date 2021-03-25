@@ -9,8 +9,8 @@ route.use(auth)
 route.get('/history', OrderController.getAllhistoryUser)
 route.get('/:id', OrderController.getOrder)
 route.patch('/loc-update/:id', OrderController.patchLocation)
-route.put('/:id', OrderController.addOrderDriver)
-route.patch('/:id', OrderController.updateStatus)
+// route.put('/:id', OrderController.addOrderDriver)
+// route.patch('/:id', OrderController.updateStatus)``
 route.delete('/:id', OrderController.deleteOrder)
     
 module.exports = route

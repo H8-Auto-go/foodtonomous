@@ -57,4 +57,21 @@ describe('test soclet io', () => {
             done()
         })
     })
+    describe('order confirmation', () => {
+        test('confirmation', (done) => {
+            const data = {
+                "status": "on going restaurant",
+                "userId": 1,
+                "driverId": 1,
+                "restaurantId": 2,
+                "foodId": 4
+            }
+            socket.emit('order confirmation', data)
+            socket.on('order confirmation', order => {
+                console.log(order)
+            })
+            done()
+        })
+        
+    })
 })

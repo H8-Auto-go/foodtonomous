@@ -1,32 +1,32 @@
 const {Order, User, Driver, Restaurant, Foods} = require('../models')
 
 class OrderController {
-    static async createOrder({userId, foodId, restaurantId}, socketUserId) {
-        try {
-            const {id} = await Order.create({
-                status: 'pending',
-                socketUserId,
-                restaurantId,
-                foodId,
-                userId,
-            })
-            return await Order.findByPk(id, {include: [User, Foods, Restaurant]})
-        } catch (err) {
-            console.log(err)
-        }
-    }
+    // static async createOrder({userId, foodId, restaurantId}, socketUserId) {
+    //     try {
+    //         const {id} = await Order.create({
+    //             status: 'pending',
+    //             socketUserId,
+    //             restaurantId,
+    //             foodId,
+    //             userId,
+    //         })
+    //         return await Order.findByPk(id, {include: [User, Foods, Restaurant]})
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
+    // }
 
-    static async addOrderDriver({ id, driverId }, socketDriverId){
-        try {
-            return await Order.update({
-                status: 'on going',
-                socketDriverId,
-                driverId
-            }, {where: {id}, returning: true})
-        } catch (err) {
-            console.log(err)
-        }
-    }
+    // static async addOrderDriver({ id, driverId }, socketDriverId){
+    //     try {
+    //         return await Order.update({
+    //             status: 'on going',
+    //             socketDriverId,
+    //             driverId
+    //         }, {where: {id}, returning: true})
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
+    // }
 
     static async getOrder(req, res, next) {
         try {
@@ -68,13 +68,13 @@ class OrderController {
         }
     }
 
-    static async updateStatus({status, id}) {
-        try {
-            return await Order.update({status}, {where: {id}})
-        } catch (err) {
-            console.log(err)
-        }
-    }
+    // static async updateStatus({status, id}) {
+    //     try {
+    //         return await Order.update({status}, {where: {id}})
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
+    // }
 
     static async patchLocation(req, res, next) {
         try {
@@ -92,7 +92,8 @@ class OrderController {
     static async deleteOrder(req, res, next) {
         try {
             const orderId = +req.params.id
-            await Order.destroy({where: {id:orderId}})
+            const order = await Order.destroy({where: {id:orderId}})
+            if(!order) throw { name: 'customError', code: 404, msg: 'order not define' }
             res.status(200).json({message: 'Success delete order'})
         } catch (err) {
             next(err)
@@ -102,9 +103,11 @@ class OrderController {
     static async getAllhistoryUser(req, res, next) {
         try {
             const id = req.user.id
-            const history = await Order.findOne({where: {id, status:'done'}, include: [User, Driver, Restaurant, Foods]})
+            const history = await Order.findOne({where: {userId:id, status:'done'}, include: [User, Driver, Restaurant, Foods]})
+            if(!history) throw { name: 'customError', code: 404, msg: 'history not define' }
             res.status(200).json(history)
         } catch (err) {
+            console.log(err);
             next(err)
         }
     }

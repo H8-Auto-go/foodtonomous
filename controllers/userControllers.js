@@ -6,7 +6,6 @@ class UserController {
         try {
             console.log(req.body);
             if (req.body.role === 'user'){
-                const user = await User.findOne({where:{email:req.body.email}})
                 const result = await User.create(req.body)
                 res.status(201).json({
                     msg: 'sukses register',
@@ -40,7 +39,6 @@ class UserController {
                 location: JSON.parse(location)
             })
         } catch(err) {
-            console.log(err)
             next(err)
         }
     }
