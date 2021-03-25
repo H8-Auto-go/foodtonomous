@@ -12,11 +12,11 @@ module.exports = class AutomationScheduleController {
         }
     }
     static async getAllSchedules(req, res, next) {
-        console.log('masuk sini');
+        // console.log('masuk sini');
         try {
             let userId = 0
-            console.log('masuk sini 2');
-            console.log(req.user)
+            // console.log('masuk sini 2');
+            // console.log(req.user)
             if (req.user) {
                  userId = +req.user.id
             } else {

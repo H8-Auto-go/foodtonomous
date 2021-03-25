@@ -31,16 +31,14 @@ io.on('connection', async socket => {
       const [hourInSchedule, minuteInSchedule] = time.split(".")
       // console.log(automationSchedules)
       // console.log(hourInSchedule, minuteInSchedule, hour, minute, num)
-      console.log(hourInSchedule, hour, minuteInSchedule, minute, num)
+      // console.log(hourInSchedule, hour, minuteInSchedule, minute, num)
       if(hourInSchedule === hour && minuteInSchedule === minute && num < 1) {
-        console.log(hourInSchedule === hour, minuteInSchedule === minute, '<<<< after masuknya')
+        // console.log(hourInSchedule === hour, minuteInSchedule === minute, '<<<< after masuknya')
         num++
         // console.log(hour, minute, '<<<<< yeay jalan')
-        const {userId, foodId, restaurantId} = await AutomationSchedule.findByPk(id)
-        /**
-         * 
-         */
-        const createdOrder = await OrderController.createOrder({status: 'pending', restaurantId, foodId, userId})
+        const {userId, foodId, restaurantId, quantity} = await AutomationSchedule.findByPk(id)
+
+        const createdOrder = await OrderController.createOrder({status: 'pending', restaurantId, foodId, userId, quantity}, socket.id)
         // console.log('order created', createdOrder)
         io.emit("incoming order", createdOrder)
       }
@@ -64,15 +62,16 @@ io.on('connection', async socket => {
         driver: {id: driverId, saldo: driverSaldo}, 
         food: { id: foodId, price: foodPrice }
       } = await OrderController.updateStatus({status, id})
-      const orderPrice = (foodPrice + (distance*2000))
-      const updatedUserSaldo = userSaldo - orderPrice
-      const updatedDriverSaldo = driverSaldo + orderPrice
+      // const orderPrice = (foodPrice + (distance*2000))
+      const totalPrice = (quantity*foodPrice)+(distance*2000)
+      const updatedUserSaldo = userSaldo - totalPrice
+      const updatedDriverSaldo = (driverSaldo + (distance*2000*0.9))
       const bill = {updatedUserSaldo, updatedDriverSaldo, userId, driverId}
       const [user, driver] = await UserController.updateSaldo(bill)
-      const totalPrice = (quantity*foodPrice)+(distance*2000)
+      // console.log(totalPrice, id, '<<<<<<<< ANJATTTTTTTT')
       const updatedTotalPrice = await OrderController.updateTotalPrice({totalPrice, id})
-      console.log(user, driver, '<<<<<< ini semua data harusnya ada')
-      socket.broadcast.emit('giveARating')
+      // console.log(user, driver, '<<<<<< ini semua data harusnya ada')
+      io.emit('giveARating')
     } catch(err) {
       console.log(err)
     }

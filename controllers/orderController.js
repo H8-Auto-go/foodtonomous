@@ -1,10 +1,11 @@
 const {Order, User, Driver, Restaurant, Foods} = require('../models')
 
 class OrderController {
-    static async createOrder({userId, foodId, restaurantId}, socketUserId) {
+    static async createOrder({userId, foodId, restaurantId, quantity}, socketUserId) {
         try {
             const {id} = await Order.create({
                 status: 'pending',
+                quantity,
                 socketUserId,
                 restaurantId,
                 foodId,
@@ -185,7 +186,7 @@ class OrderController {
     static async getAllhistoryUser(req, res, next) {
         try {
             const id = req.user.id ||1
-            const history = await Order.findAll({where: {userId: id ,status:'done'}, include: [User, Driver, Restaurant, Foods]})
+            const history = await Order.findAll({where: {userId: id ,status:'done'}, include: [User, Driver, Restaurant, Foods], order: [['id', 'DESC']]})
             res.status(200).json(history)
         } catch (err) {
             next(err)
